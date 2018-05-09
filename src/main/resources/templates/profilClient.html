@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Mon profil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		
+		<main id="main">
+			<section class="latest-coupon container pad-top-lg pad-bottom-md">
+				<div class="container">
+			      <div class="row" th:if="${#httpServletRequest.requestURI == '/profilClient/informationsPersonnelles'}">
+			      	<div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+					   <p class=" text-info" th:text="${date}"></p>
+			      	</div>
+			        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+			          <div class="panel panel-info">
+			            <div class="panel-heading">
+			              <h3 class="panel-title"><th:block th:text="${client.nom}"></th:block> <th:block th:text="${client.prenom}"></th:block></h3>
+			            </div>
+			            <div class="panel-body">
+			              <div class="row">
+			               <div class="col-md-3 col-lg-3 " align="center"> 
+				               	<img alt="Image-Client" th:src="@{/images/uploaded-images/images-clients/${client.image}}" class="img-circle img-responsive"> 
+			               </div>
+			                <div class=" col-md-9 col-lg-9 "> 
+			                  <table class="table table-user-information">
+			                    <tbody>		                   
+			                      <tr>
+			                        <td>Ville</td>
+			                        <td th:text="${client.ville}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Adresse</td>
+			                        <td th:text="${client.adresse}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Adresse-mail</td>
+			                        <td th:text="${client.adresseMail}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Téléphone</td>
+			                        <td th:text="${client.telephone}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Login</td>
+			                        <td th:text="${client.compte.motDePasse}"></td>
+			                      </tr>
+			                    </tbody>
+			                  </table>	             
+			                </div>
+			              </div>
+			            </div>
+			                 <div class="panel-footer">
+			                     <a th:href="@{/profilClient/informationsPersonnelles/modification}" data-original-title="Changer mes informations" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+			                 </div> 
+			          </div>
+			        </div>
+			      </div>
+			      
+			      <div class="row" th:if="${#httpServletRequest.requestURI == '/profilClient/informationsPersonnelles/modification'}" >
+					<div class="col-md-6 col-md-offset-3">
+						<div th:if="${ successMessage != null }" class="alert alert-success alert-dismissible fade in">
+    						<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    						<strong th:text="${successMessage}" ></strong>	
+  						</div>
+  						<div th:if="${ errorMessage != null }" class="alert alert-danger alert-dismissible fade in">
+    						<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    						<strong th:text="${errorMessage}" ></strong>	
+  						</div>
+						<form autocomplete="off" th:object="${client}" th:action="@{/profilClient/informationsPersonnelles/modification}" th:method="put" class="form-horizontal"	role="form">
+							<h4><span class="glyphicon glyphicon-user"></span> Informations Personnelles :</h4>
+							<input type="hidden" th:field="*{id}" th:value="${client.id}" />
+							<div class="form-group">
+								<div class="col-sm-9">
+								<label>Nom :</label>
+									<input type="text" th:field="*{nom}"  th:value="${client.nom}" class="form-control" /> 
+								</div>
+							</div>
+		
+							<div class="form-group">
+								<div class="col-sm-9">
+								<label>Prénom :</label>
+									<input type="text" th:field="*{prenom}" th:value="${client.prenom}" class="form-control" /> 
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-9">
+								<label>Ville :</label>
+									<select  class="form-control" th:field="*{ville}" >
+									   <option th:each="villes : ${T(com.epi.pfa.model.Ville).values()}"
+									          th:value="${villes}" 
+									          th:text="${villes}"
+									          th:selected="${client.ville}">
+									   </option>
+									</select> 
+								</div>
+							</div>
+					
+						    <div class="form-group">
+								<div class="col-sm-9">
+									<label>Téléphone :</label>
+									<input type="text" required="required" th:field="*{telephone}"	th:value="${client.telephone}" class="form-control" /> 
+								</div>
+							</div>
+						
+						    <div class="form-group">
+								<div class="col-sm-9">
+									<label>E-mail :</label>
+									<input type="text" disabled="disabled"  th:value="${client.adresseMail}" class="form-control" /> 
+								</div>
+							</div>
+						
+						    <div class="form-group">
+								<div class="col-sm-9">
+									<label>Adresse :</label>
+									<input type="text" required="required" th:field="*{adresse}" th:value="${client.adresse}" class="form-control" /> 
+								</div>
+							</div>
+						
+						    <div class="form-group">
+								<div class="col-sm-9">
+									<label>Login :</label>
+									<input type="text" required="required" th:field="*{compte.login}" 	th:value="${client.compte.login}" class="form-control" /> 
+								</div>
+							</div>
+						    <div class="form-group">
+								<div class="col-sm-9">
+									<label>Mot de passe :</label>
+									<input type="password" required="required" th:field="*{compte.motDePasse}" class="form-control" /> 
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="col-sm-9">
+									<label>Resaisir :</label>
+									<input type="password" required="required" name="mdp"  class="form-control" /> 
+								</div>
+							</div>
+							<input type="hidden" th:field="*{adresseMail}" th:value="${client.adresseMail}" /> 
+ 							<input type="hidden" th:field="*{compte.enabled}"  th:value="${client.compte.enabled}" />
+							<input type="hidden" th:field="*{compte.role}" th:value="${client.compte.role}" />
+							<input type="hidden" th:field="*{compte.id}" th:value="${client.compte.id}" />
+							<input type="hidden" th:field="*{image}" th:value="${client.image}" /> 
+							<div class="form-group">
+								<div class="col-sm-6">
+									<input type="submit" value="Enregistrer" class="btn btn-primary" />
+									<a  th:href="@{/profilClient/informationsPersonnelles}" class="btn btn-default">Annuler</a>
+								</div>		
+							</div> 							
+						</form>
+					</div>
+				</div>
+			      
+			    </div>			
+			</section>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+	<script th:src="@{/js/profil-card.js}"></script>
+</body>
+</html>

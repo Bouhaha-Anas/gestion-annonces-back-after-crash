@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Accueil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		
+		<main id="main">
+			<!-- banner of the page -->
+			<section class="banner banner3 bg-full overlay" style="background-image: url(images/img30.jpg);">
+				<div class="holder">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12 text-center">
+								<h1>Nouvelle Offre</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- twocolumns of the page -->
+			<div class="twocolumns pad-top-lg pad-bottom-lg">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- Content of the page -->
+							<article id="content">
+								<!-- header content of the page -->
+								<header class="header-content">
+									<div th:if="${ successMessage != null }" class="alert alert-success alert-dismissible fade in">
+    									<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    									<strong th:text="${successMessage}" ></strong>	
+  									</div>
+  									<div th:if="${ errorMessage != null }" class="alert alert-danger alert-dismissible fade in">
+    									<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    									<strong th:text="${errorMessage}" ></strong>	
+  									</div>
+									<h2 class="heading3">Nouvelle offre</h2>
+									<p><i>Remplir ce formulaire pour valider votre offre !</i></p>
+								</header>
+								<!-- Sub Form of the page -->
+								<form enctype='multipart/form-data' autocomplete="off" th:action="@{/nouvelleOffre}" th:method="post" th:object="${produit}" class="sub-form">
+									<fieldset>
+										<div class="form-group">
+											<div class="col">
+												<label>Nom <span class="clr">*</span></label>
+												<input type="text" th:field="*{nom}" class="form-control" required="required" />
+											</div>
+											<div class="col">
+												<label>Catégorie <span class="clr">*</span></label>
+												<select name="choixCategorie">
+													<option th:each="categorie : ${#servletContext.getAttribute('categories')}" th:text="${categorie.nom}"></option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col">
+												<label>Date échéance <span class="clr">*</span></label>
+												<input type="date" name="dateFinS" class="form-control" required="required" />
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col">
+												<label>Prix avant promotion <span class="clr">*</span></label>
+												<input type="number" th:field="*{prixAvantRed}" class="form-control" required="required" />
+											</div>
+											<div class="col">
+												<label>Prix après promotion <span class="clr">*</span></label>
+												<input type="number" th:field="*{prixApresRed}" class="form-control" required="required" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Description <span class="clr">*</span></label>
+											<textarea th:field="*{description}" placeholder="Ecrivez une petite description de votre offre . . ." required="required" ></textarea>
+										</div>
+										<div class="form-group">
+											<label>Image jointe <span class="clr">*</span></label>
+											<input type="file" name="imageP" class="form-control">
+										</div>					
+										<button class="btn-primary text-center text-uppercase">valider offre</button>
+									</fieldset>
+								</form>
+							</article>					
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+</body>
+</html>

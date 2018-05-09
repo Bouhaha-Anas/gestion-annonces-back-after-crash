@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment">
+	<title>Inscription Réussie</title>
+</head>
+<body>
+	    <div class="jumbotron jumbotron-fluid">
+  			<div class="container">
+  				<img th:src="@{/images/sent-mail.png}">
+	    		<h1>Votre compte est bien créé</h1> 
+	    		<p><strong>Dernière étape : </strong> <br/>
+	    				   Vous devez consulter le lien d'activation envoyé à votre boite <strong>E-mail</strong> pour accéder à votre nouveau compte.
+	    		</p>
+	    		<a th:href="@{/accueil}" class="btn btn-success btn-lg">Acceuil</a>
+  			</div>
+		</div>
+</body>
+</html>

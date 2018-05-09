@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Accueil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		
+		<main id="main">
+			<section class="latest-coupon container pad-top-lg pad-bottom-md">
+				<div th:if="${ successMessage != null }" class="alert alert-success alert-dismissible fade in">
+    				<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    				<strong th:text="${successMessage}"></strong>	
+  				</div>
+		        <form th:action="@{'/validerCommande/promotion/' + ${produit.id}}" th:method="post">
+					<div>
+						<th:block th:text="${produit.nom}" ></th:block>
+					</div>
+					<div>
+						<th:block th:text="${produit.description}" ></th:block>
+					</div>
+					<div>
+						<th:block th:text="${produit.prixApresRed}" ></th:block>
+					</div>
+					<div>
+						<select name="quantite">
+							<option>1</option>
+							<option>2</option>
+							<option>3</option>
+							<option>4</option>
+							<option>5</option>
+							<option>6</option>
+						</select>
+					</div>
+					<input type="submit" value="Valider Commande" class="btn btn-success"/>
+				</form>				
+			</section>
+		</main>	
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+</body>
+</html>

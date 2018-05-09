@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<header id="header">
+			<!-- header top of the page -->
+			<div class="header-top">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<span class="txt">Bienvenue chez Univers-Promo, Gagnez + avec nos offres</span>
+							<ul class="align-left list-unstyled">
+								<li sec:authorize="!isAuthenticated()" ><a th:href="@{/login}"><i class="fa fa-unlock-alt"></i> Se connecter</a></li>
+								<li sec:authorize="isAuthenticated()" ><a th:href="@{/logout}"><i class="fa fa-unlock-alt"></i> Se déconnecter</a></li>
+								<li sec:authorize="!isAuthenticated()" ><a th:href="@{/inscription}"><i class="fa fa-user"></i> S'inscrire</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- header holder of the page -->
+			<div class="header-holder container">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="logo">
+							<a th:href="@{/accueil}"><img th:src="@{/images/logo.png}" alt="Coupmy" class="img-responsive"></a>
+						</div>
+						<div class="search-cart">
+							<form autocomplete="off" th:action="@{/accueil/resultatRecherche}" th:method="get" class="search-form">
+								<fieldset>
+									<select name="nomC">
+										<option value="0">Selectionner Catégorie</option>
+										<option th:each="categorie : ${#servletContext.getAttribute('categories')}" th:text="${categorie.nom}"></option>
+									</select>
+									<input type="search" class="form-control" name="nomP" placeholder="Mots-clés . . .">
+									<button type="submit" class="sub-btn"><i class="icon-search"></i></button>
+								</fieldset>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- nav holder of the page -->
+			<div class="nav-holder">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<a href="#" class="nav-opener text-center hidden visible-sm visible-xs"><i class="fa fa-bars"></i></a>
+							<!-- nav of the page -->
+							<nav id="nav">
+								<ul class="list-unstyled">
+									<li class="active">
+										<a th:href="@{/accueil}">Accueil</a></li>								
+									<li>
+										<a href="#">Offres</a>
+										<ul class="drop-down list-unstyled">
+											<li><a href="blog.html">Blog</a></li>
+											<li><a href="blog-detail.html">Blog Detail</a></li>
+										</ul>
+									</li>
+									<li sec:authorize="hasAuthority('CLIENT')" >
+										<a th:href="@{/notifications}">Notifications</a>
+									</li>
+									<li sec:authorize="hasAuthority('CLIENT')" >
+										<a href="#">Profil</a>							
+											<ul class="drop-down list-unstyled">
+												<li><a th:href="@{/profilClient/informationsPersonnelles}">Informations Personnelles</a></li>
+												<li><a th:href="@{/profilClient/mesRecommandations}">Mes recommandations</a></li>
+												<li><a th:href="@{/profilClient/mesCommandes}">Mes commandes</a></li>		
+											</ul>
+									</li>
+									
+									<li sec:authorize="hasAuthority('ENTREPRENEUR')" >
+										<a href="#">Profil</a>
+										<ul class="drop-down list-unstyled">
+											<li><a th:href="@{/profilEntrepreneur/informationsPersonnelles}">Informations Personnelles</a></li>
+											<li><a th:href="@{/profilClient/mesOffres}">Mes offres</a></li>
+										</ul>
+									</li>
+								</ul>
+							</nav>
+							<a sec:authorize="hasAuthority('ENTREPRENEUR')" th:href="@{/nouvelleOffre}" class="btn-primary text-center text-uppercase">Nouvelle offre</a>
+						</div>
+					</div>
+				</div>
+			</div>
+</header>
+</html>

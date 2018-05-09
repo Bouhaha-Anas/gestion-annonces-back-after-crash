@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Accueil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		
+		<main id="main">
+			<!-- banner of the page -->
+			<section class="banner banner3 bg-full overlay" style="background-image: url(images/img30.jpg);">
+				<div class="holder">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12 text-center">
+								<h1>Inscription</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- twocolumns of the page -->
+			<div class="twocolumns pad-top-lg pad-bottom-lg">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<p>Vous etes <a th:href="@{/inscriptionClient}" ><strong> Client </strong></a>, ou<a th:href="@{/inscriptionEntrepreneur}" ><strong> Entrepreneur </strong>? </a></p>
+							<!-- Register holder of the page -->
+							<div class="register-holder">
+								<div class="txt-holder">
+									<h3 class="heading2">S'inscrire maintenant</h3>
+									<p>Remplir le formulaire pour valider votre inscription</p>
+									<form enctype='multipart/form-data' autocomplete="off" th:if="${#httpServletRequest.requestURI == '/inscriptionClient'}" th:action="@{/inscriptionClient}" th:object="${client}" method="post" class="register-form">
+										<fieldset>
+											<input type="text" required="required" th:field="*{nom}" placeholder="Nom *" class="form-control" />
+											<input type="text" required="required" th:field="*{prenom}"	placeholder="Prénom *" class="form-control" />
+											<select th:field="*{ville}" class="form-control" >
+								   				<option th:each="villes : ${T(com.epi.pfa.model.Ville).values()}" 
+											          th:value="${villes}" 
+											          th:text="${villes}">
+											   	</option>
+											</select>						
+											<input type="text" required="required" th:field="*{telephone}"	placeholder="Téléphone *" class="form-control" />
+											<input type="email" required="required" th:field="*{adresseMail}" placeholder="E-mail *" class="form-control" />
+											<input type="text" required="required" th:field="*{adresse}" placeholder="Adresse *" class="form-control" />
+											<input type="file" required="required" name="imageC" class="form-control" />
+											<input type="text" required="required" th:field="*{compte.login}"	placeholder="Login *" class="form-control" />
+											<input type="password" required="required" th:field="*{compte.motDePasse}"	placeholder="Mot de passe *" class="form-control" />
+											<input type="password" required="required" name="mdp" placeholder="Resaisir... *" class="form-control" />
+											<button type="submit" class="btn-primary text-center text-uppercase">Créer un compte</button>
+										</fieldset>
+									</form>
+									
+									<form enctype='multipart/form-data' autocomplete="off" th:if="${#httpServletRequest.requestURI == '/inscriptionEntrepreneur'}" th:action="@{/inscriptionEntrepreneur}" th:object="${entrepreneur}" method="post" class="register-form">
+										<fieldset>
+											<input type="text" required="required" th:field="*{denominationSociale}" placeholder="Dénomination sociale" class="form-control" />
+											<input type="text" required="required" th:field="*{secteurActivite}"	placeholder="Secteur d'activité *" class="form-control" />							
+											<input type="text" required="required" th:field="*{siegeSocial}"	placeholder="Siège social *" class="form-control" />
+											<input type="email" required="required" th:field="*{adresseMail}"	placeholder="exemple@exemple.com" class="form-control" />
+											<input type="text" required="required" th:field="*{telephone}"	placeholder="Télephone *" class="form-control" />
+											<input type="text" required="required" th:field="*{siteWeb}"	placeholder="Site web *" class="form-control" />							
+											<input type="file" required="required" name="logoE" class="form-control" />
+											<input type="text" required="required" th:field="*{compte.login}"	placeholder="Login *" class="form-control" />
+											<input type="password" required="required" th:field="*{compte.motDePasse}"	placeholder="Mot de passe *" class="form-control" />
+											<input type="password" required="required" name="mdp" placeholder="Resaisir... *" class="form-control" />
+											<button type="submit" class="btn-primary text-center text-uppercase">Créer un compte</button>
+										</fieldset>
+									</form>
+									<span th:utext="${errorMessage}"></span>
+								</div>
+								<div class="img-holder">
+									<img src="images/img62.jpg" alt="image description" class="img-responsive">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+</body>
+</html>

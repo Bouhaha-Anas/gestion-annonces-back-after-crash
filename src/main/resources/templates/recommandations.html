@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Recommandations</title>
+</head>
+<body>
+		<div id="wrapper" >
+			<header th:replace="~{head}" id="header">
+			</header>
+		
+			<main id="main">
+				<section class="latest-coupon container pad-top-lg pad-bottom-md">
+					<div class="holder">				
+						<div class="container">
+							<div class="card text-center">
+							  <div class="card-header">
+							    <strong style="float: left;">Examinez vos recommandations</strong>
+							  </div>
+							  <div class="card-body">						    
+							    <img style="float: left;" alt="recommandationImg" th:src="@{/images/recommandation.png}">				    
+							   	<p class="card-text"><strong>Choisir vos catégories favorites pour ne pas manquer aucune nouvelle :</strong></p>
+							   	<form th:action="@{/profilClient/mesRecommandations}" th:method="post">
+								   	<select id="mySelect" multiple="multiple" name="cats">
+										<option th:each="rcategorie : ${remainCategories}" th:text="${rcategorie.nom}"></option>
+									</select>
+									<input disabled id="btnSubmit" type="submit" class="btn btn-primary" value="Ajouter à mes favoris" style="float: right;" />
+								</form>
+								<hr>
+								<strong>Ce que vous avez déjà recommandé :</strong>
+								<form th:action="@{/profilClient/mesRecommandations}" th:method="delete">
+									<input th:each="mesFav : ${mesFavoris}" type="checkbox" th:text="${mesFav.nom}" th:value="${mesFav.nom}" name="remoCat" />
+									<input disabled id="btnSupp" type="submit" class="btn btn-danger" value="Retirer de mes favoris" style="float: right;" />
+								</form>			     
+							  </div>
+							  <div class="card-footer text-muted">
+							    <a th:href="@{/accueil}"><button class="btn btn-default" style="float: right;">Pas maintenant</button></a>	    					  		     
+							  </div>	  
+							</div>
+						</div>				
+					</div>
+				</section>
+			</main>
+		
+			<footer th:replace="~{footer}" id="footer">
+			</footer>
+		
+			<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+			<div id="loader" class="loader-holder">
+				<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+			</div>	
+		</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+	
+	<script type="text/javascript">
+	  
+	  $('#mySelect').change(function () 
+	  {
+	    selectVal = $("#mySelect").val();
+	   
+	    if (selectVal == 0) 
+	    {
+	       $('#btnSubmit').attr("disabled", true);
+	    }
+	    else 
+	    {
+	      $('#btnSubmit').attr("disabled", false);
+	    }
+	  });
+	
+	var checkboxes = $("input[type='checkbox']"),
+    supprimer = $("#btnSupp");
+
+	checkboxes.click(function() {
+	supprimer.attr("disabled", !checkboxes.is(":checked"));
+});
+	</script>
+</body>
+</html>

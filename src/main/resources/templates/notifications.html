@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Accueil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		<main id="main">
+			<section class="latest-coupon container pad-top-lg pad-bottom-md">
+				<div id="hoverDiv" class="row" th:each="notification :${notifications}">
+					<div class="col-6">
+						<strong><a th:href="@{'/offre/' + ${notification.notificationPrimaryKey.idProduit}}"><th:block th:text="${notification.contenu}"></th:block></a></strong>
+					</div>
+					<div class="col-4">
+						<p>Publiée le :<strong th:text="${notification.dateEnregistrement}"></strong></p>
+					</div>
+				</div>
+						
+			</section>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+</body>
+</html>

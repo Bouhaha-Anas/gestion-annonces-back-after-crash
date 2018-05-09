@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Accueil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		
+		<main id="main">
+			<!-- banner of the page -->
+			<section class="banner banner3 bg-full overlay" style="background-image: url(images/img30.jpg);">
+				<div class="holder">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12 text-center">
+								<h1>Détails Offre</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- twocolumns of the page -->
+			<div class="twocolumns pad-top-lg pad-bottom-lg">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- content of the page -->
+							<article id="content">
+								<!-- post detail of the page -->
+								<div class="post-detail style2">
+									<div class="img-holder">
+										<img th:src="@{/images/uploaded-images/images-produits/${produit.image}}" alt="image description" class="img-responsive">
+									</div>
+									<div class="txt-holder">
+										<header class="header">
+											<div class="coupon-logo">
+												<img th:src="@{/images/uploaded-images/images-entrepreneurs/${produit.entrepreneur.logo}}" alt="Red Cart" class="img-responsive">
+											</div>
+											<div class="align-left">
+												<h3 class="heading3" th:text="${produit.nom}"></h3>
+												<ul class="list-unstyled list-show">
+													<li><a href="#"><i class="icon icon-smile"></i> Verified</a></li>
+													<li><a href="#"><i class="icon icon-user"></i> 35 Used</a></li>
+												</ul>
+											</div>
+										</header>
+										<p th:text="${produit.description}" ></p>
+										<footer class="footer">
+											<a href="#" class="btn-primary text-center text-uppercase">Acheter</a>
+										</footer>
+									</div>
+								</div>
+							</article>
+							<aside id="sidebar">
+								<!-- Widget of the page -->
+								<section class="widget search-widget">
+									<div>
+										<strong style="color: #514095;font-size: 18px;font-weight: 700;margin-bottom: 8px;"><th:block th:text="${produit.entrepreneur.denominationSociale}"></th:block> :</strong>
+									</div>
+									<hr>
+									<div>
+										<strong><span>Adresse : </span></strong><th:block th:text="${produit.entrepreneur.siegeSocial}" ></th:block><br/>
+										<strong><span>Téléphone : </span></strong><th:block th:text="${produit.entrepreneur.telephone}" ></th:block><br/>
+										<strong><span>E-mail : </span></strong><th:block th:text="${produit.entrepreneur.adresseMail}" ></th:block><br/>
+									</div>
+									
+								</section>
+								<!-- Widget of the page -->
+								<section class="widget category-widget">
+									
+								</section>
+								<!-- Widget of the page -->
+								<section class="widget popular-widget">
+									
+								</section>
+								<!-- Widget of the page -->
+								<section class="widget news-widget">
+									
+								</section>
+								<!-- Widget of the page -->
+								<section class="widget tags-widget">
+									
+								</section>
+							</aside>							
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+</body>
+</html>

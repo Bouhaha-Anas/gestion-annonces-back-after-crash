@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Mon profil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		
+		<main id="main">
+			<section class="latest-coupon container pad-top-lg pad-bottom-md">
+				<div class="container">
+			      <div class="row" th:if="${#httpServletRequest.requestURI == '/profilEntrepreneur/informationsPersonnelles'}">
+			      	<div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+					   <p class=" text-info" th:text="${date}"></p>
+			      	</div>
+			        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+			          <div class="panel panel-info">
+			            <div class="panel-heading">
+			              <h3 class="panel-title" th:text="${entrepreneur.denominationSociale}"></h3>
+			            </div>
+			            <div class="panel-body">
+			              <div class="row">
+			               <div class="col-md-3 col-lg-3 " align="center"> 
+				               	<img alt="Img-Entrepreneur" th:src="@{/images/uploaded-images/images-entrepreneurs/${entrepreneur.image}}" class="img-circle img-responsive"> 
+			               </div>
+			                <div class=" col-md-9 col-lg-9 "> 
+			                  <table class="table table-user-information">
+			                    <tbody>
+			                      <tr>
+			                        <td>Secteur d'activité</td>
+			                        <td th:text="${entrepreneur.secteurActivite}"></td>
+			                      </tr>		                   
+			                      <tr>
+			                        <td>Adresse-mail</td>
+			                        <td th:text="${entrepreneur.adresseMail}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Siège social</td>
+			                        <td th:text="${entrepreneur.siegeSocial}"></td>
+			                      </tr> 
+			                      <tr>
+			                        <td>Site web</td>
+			                        <td th:text="${entrepreneur.siteWeb}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Téléphone</td>
+			                        <td th:text="${entrepreneur.telephone}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Login</td>
+			                        <td th:text="${entrepreneur.compte.login}"></td>
+			                      </tr>
+			                    </tbody>
+			                  </table>	             
+			                </div>
+			              </div>
+			            </div>
+			                 <div class="panel-footer">
+			                     <a th:href="@{/profilEntrepreneur/informationsPersonnelles/modification}" data-original-title="Changer mes informations" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+			                 </div> 
+			          </div>
+			        </div>
+			      </div>
+			      
+			      <div class="row" th:if="${#httpServletRequest.requestURI == '/profilEntrepreneur/informationsPersonnelles/modification'}" >
+					<div class="col-md-6 col-md-offset-3">
+						<div th:if="${ successMessage != null }" class="alert alert-success alert-dismissible fade in">
+    						<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    						<strong th:text="${successMessage}" ></strong>	
+  						</div>
+  						<div th:if="${ errorMessage != null }" class="alert alert-danger alert-dismissible fade in">
+    						<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    						<strong th:text="${errorMessage}" ></strong>	
+  						</div>
+						<form autocomplete="off" th:object="${entrepreneur}" th:action="@{/profilEntrepreneur/informationsPersonnelles/modification}" th:method="put" class="form-horizontal"	role="form">
+							<h4><span class="glyphicon glyphicon-user"></span> Informations Personnelles :</h4>
+							<input type="hidden" th:field="*{id}" th:value="${entrepreneur.id}" />
+							
+							<div class="form-group">
+								<div class="col-sm-9">
+								<label>Dénomination sociale :</label>
+									<input type="text" required="required" th:field="*{denominationSociale}"  th:value="${entrepreneur.denominationSociale}" class="form-control" /> 
+								</div>
+							</div>
+					
+						    <div class="form-group">
+								<div class="col-sm-9">
+									<label>Secteur d'activité :</label>
+									<input type="text" required="required" th:field="*{secteurActivite}"	th:value="${entrepreneur.secteurActivite}" class="form-control" /> 
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-9">
+									<label>Adresse-mail :</label>
+									<input type="email" disabled="disabled" th:value="${entrepreneur.adresseMail}" class="form-control" /> 
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-9">
+									<label>Siège social :</label>
+									<input type="text" required="required" th:field="*{siegeSocial}" th:value="${entrepreneur.siegeSocial}" class="form-control" /> 
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-9">
+									<label>Site web :</label>
+									<input type="text" required="required" th:field="*{siteWeb}" th:value="${entrepreneur.siteWeb}" class="form-control" /> 
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-9">
+									<label>Téléphone :</label>
+									<input type="text" required="required" th:field="*{telephone}" th:value="${entrepreneur.telephone}" class="form-control" /> 
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-9">
+									<label>Login :</label>
+									<input type="text" required="required" th:field="*{compte.login}" th:value="${entrepreneur.compte.login}" class="form-control" /> 
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-9">
+									<label>Mot de passe :</label>
+									<input type="password" required="required" th:field="*{compte.motDePasse}" class="form-control" /> 
+								</div>
+							</div>
+							
+							<div class="form-group">
+								<div class="col-sm-9">
+									<label>Resaisir :</label>
+									<input type="password" required="required" name="mdp" class="form-control" /> 
+								</div>
+							</div>
+							<input type="hidden" th:field="*{adresseMail}" th:value="${entrepreneur.adresseMail}" /> 
+ 							<input type="hidden" th:field="*{compte.enabled}"  th:value="${entrepreneur.compte.enabled}" />
+							<input type="hidden" th:field="*{compte.role}" th:value="${entrepreneur.compte.role}" />
+							<input type="hidden" th:field="*{compte.id}" th:value="${entrepreneur.compte.id}" />
+							<input type="hidden" th:field="*{logo}" th:value="${entrepreneur.logo}" />
+							<input type="hidden" th:field="*{produits}" th:value="${entrepreneur.produits}" /> 
+							<div class="form-group">
+								<div class="col-sm-6">
+									<input type="submit" value="Enregistrer" class="btn btn-primary" />
+									<a  th:href="@{/profilEntrepreneur/informationsPersonnelles}" class="btn btn-default">Annuler</a>
+								</div>		
+							</div> 							
+						</form>
+					</div>
+				</div>
+			      
+			    </div>			
+			</section>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+	<script th:src="@{/js/profil-card.js}"></script>
+</body>
+</html>

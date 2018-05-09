@@ -1,0 +1,58 @@
+<footer id="footer">
+			<div class="footer-holder container">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="col1">
+							<h3 class="text-uppercase">Contact Univers-Promo</h3>
+							<ul class="list-unstyled contact-list">
+								<li>
+									<span class="icon icon-location"></span>
+									<address>02 Rue Salah Eddine Al Ayoubi, Kairouan, Tunisia</address>
+								</li>
+								<li>
+									<span class="icon icon-phone"></span>
+									<span class="tel"><a href="tel:55949877">(+216) 55 949 877</a></span>
+								</li>
+								<li>
+									<span class="icon icon-email"></span>
+									<span class="mail"><a href="mailto:univers.promo18@gmail.com">univers.promo18@gmail.com</a></span>
+								</li>
+							</ul>
+						</div>
+						<div class="col2">
+							<h3 class="text-uppercase">Liens Rapides</h3>
+							<ul class="list-unstyled f-nav">
+								<li><a href="#">A propos de nous</a></li>
+								<li><a href="#">Entrepreneurs</a></li>
+								<li sec:authorize="hasAuthority('CLIENT')"><a th:href="@{/profilClient/informationsPersonnelles}">Profil</a></li>
+								<li sec:authorize="hasAuthority('ENTREPRENEUR')"><a th:href="@{/profilEntrepreneur/informationsPersonnelles}">Profil</a></li>
+								<li><a href="#">Offres</a></li>
+							</ul>
+						</div>
+						<div class="col3">
+							<h3 class="text-uppercase">Categories</h3>
+							<ul class="list-unstyled tags">
+								<li><a href="#">Restaurants</a></li>
+								<li><a href="#">Health</a></li>
+								<li><a href="#">Fitness</a></li>
+								<li><a href="#">Events</a></li>
+								<li><a href="#">Beauty</a></li>
+								<li><a href="#">Sports</a></li>
+								<li><a href="#">Electronics</a></li>
+								<li><a href="#">Watches</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- footer area of the page -->
+			<div class="footer-area">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-sm-5">
+							<p>© 2018 All rights reserved. By Bouhaha Anas</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
