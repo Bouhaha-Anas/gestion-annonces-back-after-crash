@@ -29,6 +29,8 @@ public class AcceuilController
 	@Autowired
 	ServletContext servletContext;
 	
+	
+	
 	@RequestMapping( value= "/accueil", method = RequestMethod.GET )
 	public ModelAndView accueil(HttpServletRequest request)
 	{
