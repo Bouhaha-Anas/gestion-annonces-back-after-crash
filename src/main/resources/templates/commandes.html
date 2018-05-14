@@ -11,17 +11,24 @@
 		</header>
 		<main id="main">
 			<section class="latest-coupon container pad-top-lg pad-bottom-md">
-				<strong>Mes notifications :</strong>
+				<strong>Mes commandes :</strong>
 				<br><br>
-				<div id="hoverDiv" class="row" th:each="notification :${notifications}">
-					<div class="col-6">
-						<strong><a th:href="@{'/offre/' + ${notification.notificationPrimaryKey.idProduit}}"><th:block th:text="${notification.contenu}"></th:block></a></strong>
-					</div>
-					<div class="col-4">
-						<p>Publiée le :<strong th:text="${notification.dateEnregistrement}"></strong></p>
-					</div>
-				</div>
-						
+				<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Offre</th>
+									<th>Quantité</th>
+									<th>Date de Commande</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="commande : ${mesCommandes}">
+									<td th:text="${commande.produit.nom}"></td>
+									<td th:text="${commande.quantite}"></td>
+									<td th:text="${commande.dateCommande}"></td>
+								</tr>
+							</tbody>
+				</table>						
 			</section>
 		</main>
 		

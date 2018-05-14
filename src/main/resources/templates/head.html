@@ -26,7 +26,7 @@
 							<a th:href="@{/accueil}"><img th:src="@{/images/logo.png}" alt="Coupmy" class="img-responsive"></a>
 						</div>
 						<div class="search-cart">
-							<form autocomplete="off" th:action="@{/accueil/resultatRecherche}" th:method="get" class="search-form">
+							<form autocomplete="off" th:action="@{/resultatRecherche}" th:method="POST" class="search-form">
 								<fieldset>
 									<select name="nomC">
 										<option value="0">Selectionner Catégorie</option>
@@ -54,8 +54,9 @@
 									<li>
 										<a href="#">Offres</a>
 										<ul class="drop-down list-unstyled">
-											<li><a href="blog.html">Blog</a></li>
-											<li><a href="blog-detail.html">Blog Detail</a></li>
+											<th:block th:each="categorie : ${#servletContext.getAttribute('categories')}">
+												<li><a th:href="@{'/categorie/'+${categorie.id}+'/offres'}"><th:block th:text="${categorie.nom}"></th:block></a></li>
+											</th:block>
 										</ul>
 									</li>
 									<li sec:authorize="hasAuthority('CLIENT')" >

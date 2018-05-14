@@ -56,5 +56,14 @@ public class EntrepreneurService
 	{
 		return entrepreneurRepository.findOneByAdresseMail(adresseMail);
 	}
-	
+
+	public int totalEntrepreneurs()
+	{
+		return entrepreneurRepository.totalEntrepreneurs();
+	}
+
+	public List<Entrepreneur> findAll() 
+	{
+		return entrepreneurRepository.findAll();
+	}
 }

@@ -43,7 +43,7 @@ public class Produit implements Serializable
 	@JoinColumn( name = "entrepreneur_id" )
 	private Entrepreneur entrepreneur;
 	
-	@ManyToOne( fetch = FetchType.EAGER )
+	@ManyToOne(  )
 	@JoinColumn( name = "categorie_id" )
 	private Categorie categorie;
 	

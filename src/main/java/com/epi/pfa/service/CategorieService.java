@@ -33,4 +33,9 @@ public class CategorieService
 	{
 		return categorieRepository.findOneByNom(nom);
 	}
+
+	public Categorie findOne(Long id) 
+	{
+		return categorieRepository.findOne(id);
+	}
 }

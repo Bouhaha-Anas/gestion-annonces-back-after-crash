@@ -18,11 +18,13 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.epi.pfa.model.Categorie;
 import com.epi.pfa.model.Client;
+import com.epi.pfa.model.Commande;
 import com.epi.pfa.model.Compte;
 import com.epi.pfa.model.Recommandation;
 import com.epi.pfa.model.RecommandationPrimaryKey;
 import com.epi.pfa.service.CategorieService;
 import com.epi.pfa.service.ClientService;
+import com.epi.pfa.service.CommandeService;
 import com.epi.pfa.service.CompteService;
 import com.epi.pfa.service.RecommandationService;
 
@@ -30,16 +32,19 @@ import com.epi.pfa.service.RecommandationService;
 public class ProfilClientController 
 {
 	@Autowired
-	ClientService clientService;
+	private ClientService clientService;
 	
 	@Autowired
-	CompteService compteService;
+	private CompteService compteService;
 	
 	@Autowired
-	CategorieService categorieService;
+	private CategorieService categorieService;
 	
 	@Autowired
-	RecommandationService recommandationService;
+	private RecommandationService recommandationService;
+	
+	@Autowired
+	private CommandeService commandeService;
 	
 	@RequestMapping( value= "/profilClient/informationsPersonnelles", method= RequestMethod.GET )
 	public ModelAndView profilClientParametresGeneraux()
@@ -59,19 +64,17 @@ public class ProfilClientController
 		return modelAndView;
 	}
 	
-	@RequestMapping( value= "/profilClient/mesCommandes", method= RequestMethod.GET )
-	public ModelAndView profilClientMesCommandes()
+	@RequestMapping( value="/profilClient/mesCommandes", method= RequestMethod.GET )
+	public ModelAndView pageMesCommandes()
 	{
 		ModelAndView modelAndView = new ModelAndView();
-		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String login = auth.getName();
 		Compte compte = compteService.findOneByLogin(login);
 		Client client = clientService.findOneByCompte(compte);
-		
-		modelAndView.addObject("client", client);
-		modelAndView.setViewName("profilClient");
-		
+		List<Commande> mesCommandes = commandeService.findCommandeByClient(client.getId());
+		modelAndView.addObject("mesCommandes", mesCommandes );
+		modelAndView.setViewName("commandes");
 		return modelAndView;
 	}
 	

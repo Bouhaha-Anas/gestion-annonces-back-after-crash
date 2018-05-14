@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Accueil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		
+		<main id="main">
+			<section class="latest-coupon container pad-top-lg pad-bottom-md">
+				<th:block th:if="${produits.size() != 0 }">
+					<div class="row">
+						<header class="col-xs-12 text-center header">
+							<h2 class="heading">Les offres disponibles sous la catégorie <th:block th:text="${categorie.nom}"></th:block> </h2>
+						</header>
+					</div>
+					<div class="row">
+						<th:block th:each="produit,iterStat : ${produits}">
+									<div class="col-xs-12 col-sm-6 col-md-3">						
+										<div class="coupon-box mar-bottom-xs">
+											<div class="img-holder">
+												<img th:src="@{/images/img02.jpg}" alt="image description" class="img-resposnive">
+											</div>
+											<div class="txt-holder">
+												<h3 class="heading6"><a th:href="@{'/offre/' + ${produit.id}}"><th:block th:text="${produit.nom}"></th:block></a></h3>
+												<a sec:authorize="!hasAuthority('ENTREPRENEUR')" id="btnAjoutPanier" th:href="@{'/validerCommande/promotion/' + ${produit.id}}" class="btn-primary md-round text-center text-uppercase">Acheter</a>
+												<time class="time text-center" datetime="2017-02-03 20:00">Echu à : <th:block th:text="${produit.dateFin}"></th:block></time>
+											</div>
+										</div>
+									</div>
+						</th:block>
+					</div>
+				</th:block>
+				<th:block th:if="${produits.size() == 0 }">
+					<div class="row">
+						<header class="col-xs-12 text-center header">
+							<h3 class="heading">Pas d'offres actives sous la catégorie <th:block th:text="${categorie.nom}"></th:block></h3>
+						</header>
+					</div>
+				</th:block>				
+			</section>
+			
+			
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+</body>
+</html>

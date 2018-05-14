@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Mon profil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		
+		<main id="main">
+			<section class="latest-coupon container pad-top-lg pad-bottom-md">
+				<div class="container">
+			      <div class="row">
+			      	<div class="col-md-5  toppad  pull-right col-md-offset-3 ">
+					   <p class=" text-info" th:text="${date}"></p>
+			      	</div>
+			        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+			          <div class="panel panel-info">
+			            <div class="panel-heading">
+			              <h3 class="panel-title" th:text="${entrepreneur.denominationSociale}"></h3>
+			            </div>
+			            <div class="panel-body">
+			              <div class="row">
+			               <div class="col-md-3 col-lg-3 " align="center"> 
+				               	<img alt="Img-Entrepreneur" th:src="@{/images/uploaded-images/images-entrepreneurs/${entrepreneur.image}}" class="img-circle img-responsive"> 
+			               </div>
+			                <div class=" col-md-9 col-lg-9 "> 
+			                  <table class="table table-user-information">
+			                    <tbody>
+			                      <tr>
+			                        <td>Secteur d'activité</td>
+			                        <td th:text="${entrepreneur.secteurActivite}"></td>
+			                      </tr>		                   
+			                      <tr>
+			                        <td>Adresse-mail</td>
+			                        <td th:text="${entrepreneur.adresseMail}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Siège social</td>
+			                        <td th:text="${entrepreneur.siegeSocial}"></td>
+			                      </tr> 
+			                      <tr>
+			                        <td>Site web</td>
+			                        <td th:text="${entrepreneur.siteWeb}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Téléphone</td>
+			                        <td th:text="${entrepreneur.telephone}"></td>
+			                      </tr>
+			                      <tr>
+			                        <td>Login</td>
+			                        <td th:text="${entrepreneur.compte.login}"></td>
+			                      </tr>
+			                    </tbody>
+			                  </table>	             
+			                </div>
+			              </div>
+			            </div>
+			                 <div class="panel-footer">
+			                 </div> 
+			          </div>
+			        </div>
+			      </div>
+			    </div>	
+			</section>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+	<script th:src="@{/js/profil-card.js}"></script>
+</body>
+</html>

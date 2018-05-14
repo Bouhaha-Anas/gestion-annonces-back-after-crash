@@ -24,12 +24,15 @@ public interface ProduitRepository extends JpaRepository<Produit, Long>
 	
 	public List<Produit> findByDateFin(Date date);
 	
-	@Query( value="select p from produits p, categories c "
-			+ " where p.categorie_id = c.id and "
-			+ " p.nom = :nomP and "
-			+ " c.nom = :nomC ", nativeQuery= true )
+	@Query( value="select p from produits p where p.nom like %:nomP% and p.categorie.nom = :nomC ")
 	public List<Produit> searchByCategorie(@Param("nomP") String nomP, @Param("nomC") String nomC);
 	
 	@Query( value="select * from produits where date_debut <= :date and categorie_id = :idCat ", nativeQuery= true )
 	public List<Produit> getByDateAndCategorieId(@Param("date") Date date, @Param("idCat") Long id);
+	
+	@Query( value="select count(*) from produits", nativeQuery= true )
+	int totalProduits();
+	
+	@Query( value="select * from produits where est_active = true and categorie_id = :idC", nativeQuery= true )
+	List<Produit> findByCategorieAndState(@Param("idC") Long idC);
 }

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -83,6 +84,20 @@ public class ProfilEntrepreneurController
 		}
 		
 		modelAndView.setViewName("profilEntrepreneur");
+		return modelAndView;
+	}
+	
+	@RequestMapping( value= "/entrepreneur/{id}", method= RequestMethod.GET )
+	public ModelAndView profilEntrepreneur(@PathVariable("id") Long id)
+	{
+		ModelAndView modelAndView = new ModelAndView();
+		Entrepreneur entrepreneur = entrepreneurService.getEntrepreneur(id);
+		Date date = new Date();
+		
+		modelAndView.addObject("date", date);
+		modelAndView.addObject("entrepreneur", entrepreneur);
+		modelAndView.setViewName("entrepreneur");
+		
 		return modelAndView;
 	}
 }

@@ -64,4 +64,15 @@ public class ProduitService
 	{
 		return produitRepository.getByDateAndCategorieId(date, id);
 	}
+	
+	public int totalProduits()
+	{
+		return produitRepository.totalProduits();
+	}
+
+	public List<Produit> findByCategorieAndState(Long idC) 
+	{
+		return produitRepository.findByCategorieAndState(idC);
+	}
+	
 }

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -123,6 +124,33 @@ public class ProduitController
 		
 		modelAndView.addObject("produit", produit);
 		modelAndView.setViewName("offreDetails");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping( value="/categorie/{id}/offres", method= RequestMethod.GET )
+	public ModelAndView pageProduitsParCategorie(@PathVariable("id") Long id)
+	{
+		ModelAndView modelAndView = new ModelAndView();
+		Categorie categorie = categorieService.findOne(id);
+		List<Produit> produits = produitService.findByCategorieAndState(id);
+		modelAndView.addObject("categorie", categorie);
+		modelAndView.addObject("produits", produits);
+		modelAndView.setViewName("offres");
+		
+		return modelAndView;
+	}
+	
+	@RequestMapping( value= "/resultatRecherche", method = RequestMethod.POST )
+	public ModelAndView pageRecherche(HttpServletRequest request) throws IOException, ServletException
+	{
+		ModelAndView modelAndView = new ModelAndView();
+		String nomP = request.getParameter("nomP");
+		String nomC = request.getParameter("nomC");
+		List<Produit> rechercheProduits = produitService.searchByCategorie(nomP, nomC);
+		
+		modelAndView.addObject("rechercheProduits", rechercheProduits);
+		modelAndView.setViewName("resultatRecherche");
 		
 		return modelAndView;
 	}

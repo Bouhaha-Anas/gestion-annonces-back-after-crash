@@ -99,24 +99,80 @@ public class InscriptionController
 		return modelAndView;
 	}
 	
+//	@RequestMapping( value="/inscriptionClient", method= RequestMethod.POST )
+//	public ModelAndView addClient( Client client, WebRequest request, HttpServletRequest req) throws ServletException,IOException
+//	{
+//		ModelAndView modelAndView = new ModelAndView();
+//		String errorMessage = null;
+//		Client tempClient = clientService.findOneByAdresseMail(client.getAdresseMail());
+//		String mdp = req.getParameter("mdp");
+//		
+//		if(tempClient != null)
+//		{
+//			errorMessage = "L'adresse Mail est déjà utilisée, veuillez réessayer";
+//			modelAndView.setViewName("inscription");
+//			modelAndView.addObject("client", new Client());
+//			modelAndView.addObject("errorMessage", errorMessage);
+//			return modelAndView;
+//		}
+//		else
+//		{
+//			if( mdp.equals(client.getCompte().getMotDePasse()) )
+//			{
+//				Part part = req.getPart("imageC");
+//				String nomFichier = UploadingTask.getNomFichier(part);
+//				if (nomFichier != null && !nomFichier.isEmpty()) 
+//				{	   
+//		            nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1).substring(nomFichier.lastIndexOf('\\') + 1);
+//		            UploadingTask.ecrireFichier(part, nomFichier, CHEMIN_FICHIERS_CLIENTS);
+//		            client.setImage(nomFichier);
+//		            client.getCompte().setEnabled(false);
+//		            clientService.addClient(client);
+//					try
+//					{
+//						String appUrl = "inscriptionClient";
+//						applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(client.getCompte(), request.getLocale(), appUrl) );
+//						modelAndView.setViewName("confirmationInscription");				
+//					}
+//					catch(Exception e)
+//					{
+//						errorMessage = "Erreur lors de l'envoi de l'email d'activation, veuillez réessayer";
+//						clientService.deleteClient(client.getId());
+//						modelAndView.addObject("errorMessage", errorMessage);
+//						modelAndView.addObject("client", new Client());
+//						modelAndView.setViewName("inscription");
+//						e.printStackTrace();
+//					}
+//					return modelAndView;
+//		        }
+//				else
+//				{
+//					errorMessage = "Veuillez choisir une photo de votre profil.";
+//					modelAndView.addObject("errorMessage", errorMessage);
+//					modelAndView.addObject("client", new Client());
+//					modelAndView.setViewName("inscription");
+//					return modelAndView;
+//				}
+//			}
+//			else
+//			{
+//				errorMessage = "Vérifier votre mot de passe.";
+//				modelAndView.addObject("errorMessage", errorMessage);
+//				modelAndView.addObject("client", new Client());
+//				modelAndView.setViewName("inscription");
+//				return modelAndView;
+//			}
+//		}
+//	}
+	
+	
 	@RequestMapping( value="/inscriptionClient", method= RequestMethod.POST )
 	public ModelAndView addClient( Client client, WebRequest request, HttpServletRequest req) throws ServletException,IOException
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		String errorMessage = null;
-		Client tempClient = clientService.findOneByAdresseMail(client.getAdresseMail());
 		String mdp = req.getParameter("mdp");
 		
-		if(tempClient != null)
-		{
-			errorMessage = "L'adresse Mail est déjà utilisée, veuillez réessayer";
-			modelAndView.setViewName("inscription");
-			modelAndView.addObject("client", new Client());
-			modelAndView.addObject("errorMessage", errorMessage);
-			return modelAndView;
-		}
-		else
-		{
 			if( mdp.equals(client.getCompte().getMotDePasse()) )
 			{
 				Part part = req.getPart("imageC");
@@ -162,11 +218,7 @@ public class InscriptionController
 				modelAndView.setViewName("inscription");
 				return modelAndView;
 			}
-		}
 	}
-	
-	
-	
 	
 	@RequestMapping( value="/inscriptionEntrepreneur", method= RequestMethod.GET )
 	public ModelAndView inscriptionEntrepreneur()
@@ -181,24 +233,79 @@ public class InscriptionController
 		return modelAndView;
 	}
 	
+//	@RequestMapping( value="/inscriptionEntrepreneur", method= RequestMethod.POST ) 
+//	public ModelAndView addEntrepreneur( Entrepreneur entrepreneur, WebRequest request, HttpServletRequest req) throws ServletException,IOException
+//	{
+//		ModelAndView modelAndView = new ModelAndView();
+//		String errorMessage = null;
+//		String mdp = req.getParameter("mdp");
+//		Entrepreneur tempEntrepreneur = entrepreneurService.findOneByAdresseMail(entrepreneur.getAdresseMail());
+//
+//		if(tempEntrepreneur != null)
+//		{
+//			errorMessage = "L'adresse Mail est déjà utilisée, veuillez réessayer";
+//			modelAndView.setViewName("inscription");
+//			modelAndView.addObject("entrepreneur", new Entrepreneur());
+//			modelAndView.addObject("errorMessage", errorMessage);
+//			return modelAndView;
+//		}
+//		else
+//		{
+//			if( mdp.equals(entrepreneur.getCompte().getMotDePasse()) )
+//			{
+//				Part part = req.getPart("logoE");
+//				String nomFichier = UploadingTask.getNomFichier(part);
+//				if (nomFichier != null && !nomFichier.isEmpty()) 
+//				{	   
+//		            nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1).substring(nomFichier.lastIndexOf('\\') + 1);
+//		            UploadingTask.ecrireFichier(part, nomFichier, CHEMIN_FICHIERS_ENTREPRENEURS);
+//		            entrepreneur.setLogo(nomFichier);
+//		            entrepreneur.getCompte().setEnabled(false);
+//					entrepreneurService.addEntrepreneur(entrepreneur);
+//					try
+//					{
+//						String appUrl = "inscriptionEntrepreneur";
+//						applicationEventPublisher.publishEvent(new OnRegistrationCompleteEvent(entrepreneur.getCompte(), request.getLocale(), appUrl) );
+//						modelAndView.setViewName("confirmationInscription");			
+//					}
+//					catch(Exception e)
+//					{
+//						entrepreneurService.deleteEntrepreneur(entrepreneur.getId());
+//						errorMessage = "Erreur lors de l'envoi de l'email d'activation, veuillez réessayer";
+//						modelAndView.addObject("errorMessage", errorMessage);
+//						modelAndView.addObject("entrepreneur", new Entrepreneur());
+//						modelAndView.setViewName("inscription");
+//						e.printStackTrace();
+//					}
+//					return modelAndView;
+//		        }
+//				else
+//				{
+//					errorMessage = "Veuillez choisir un logo pour votre entreprise.";
+//					modelAndView.addObject("errorMessage", errorMessage);
+//					modelAndView.addObject("entrepreneur", new Entrepreneur());
+//					modelAndView.setViewName("inscription");
+//					return modelAndView;
+//				}
+//			}
+//			else
+//			{
+//				errorMessage = "Vérifier votre mot de passe.";
+//				modelAndView.addObject("errorMessage", errorMessage);
+//				modelAndView.addObject("entrepreneur", new Entrepreneur());
+//				modelAndView.setViewName("inscription");
+//				return modelAndView;
+//			}
+//		}
+//	}
+	
 	@RequestMapping( value="/inscriptionEntrepreneur", method= RequestMethod.POST ) 
 	public ModelAndView addEntrepreneur( Entrepreneur entrepreneur, WebRequest request, HttpServletRequest req) throws ServletException,IOException
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		String errorMessage = null;
 		String mdp = req.getParameter("mdp");
-		Entrepreneur tempEntrepreneur = entrepreneurService.findOneByAdresseMail(entrepreneur.getAdresseMail());
 
-		if(tempEntrepreneur != null)
-		{
-			errorMessage = "L'adresse Mail est déjà utilisée, veuillez réessayer";
-			modelAndView.setViewName("inscription");
-			modelAndView.addObject("entrepreneur", new Entrepreneur());
-			modelAndView.addObject("errorMessage", errorMessage);
-			return modelAndView;
-		}
-		else
-		{
 			if( mdp.equals(entrepreneur.getCompte().getMotDePasse()) )
 			{
 				Part part = req.getPart("logoE");
@@ -244,6 +351,5 @@ public class InscriptionController
 				modelAndView.setViewName("inscription");
 				return modelAndView;
 			}
-		}
 	}
 }

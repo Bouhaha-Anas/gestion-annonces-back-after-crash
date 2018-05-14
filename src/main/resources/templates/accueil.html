@@ -22,45 +22,6 @@
 					</div>
 				</div>
 			</section>
-			<section class="store-sec bg-grey pad-top-lg pad-bottom-lg" th:if="${rechercheProduits} != null" >
-				<div class="container">
-					<div class="row">
-						<header class="col-xs-12 text-center header">
-							<h3 class="heading"><span class="clr">Résultat de votre Recherche</span></h3>
-							<p>Par Catégorie && Nom d'Offre</p>
-						</header>
-					</div>
-					<div class="row">
-					   <th:block th:each="produitRech : rechercheProduits">
-							<div class="col-xs-12 col-sm-6 col-md-3">
-								<div class="coupon-box mar-bottom-xs">	
-									<div class="img-holder">
-										<img src="images/img02.jpg" alt="image description" class="img-resposnive">
-									</div>
-									<div class="txt-holder">
-										<h3 class="heading6"><a th:href="@{'/offre/' + ${produitRech.id}}"><th:block th:text="${produitRech.description}"></th:block></a></h3>
-										<ul class="list-unstyled list-show">
-											<li><a href="#"><i class="icon icon-smile"></i> Verified</a></li>
-											<li><a href="#"><i class="icon icon-user"></i> Used</a></li>
-										</ul>
-									    <a href="#" class="btn-primary md-round text-center text-uppercase">Obtenir Code Coupon</a>	
-										<time class="time text-center" datetime="2017-02-03 20:00">Echu à : <th:block th:text="${produitRech.dateFin}"></th:block></time>
-									</div>
-								</div>
-							</div>
-						</th:block>	
-					</div>
-				</div>
-			</section>
-			<section class="store-sec bg-grey pad-top-lg pad-bottom-lg" th:if="${rechercheProduits} == null and ${#httpServletRequest.requestURI == '/accueil/resultatRecherche'} " >
-				<div class="container">
-					<div class="row">
-						<header class="col-xs-12 text-center header">
-							<h3 class="heading"><span class="clr">Désolé, Pas de résultat</span><i class="fa fa-meh-o" style="font-size:48px;color:red"></i></h3>
-						</header>
-					</div>
-				</div>
-			</section>
 			<section class="latest-coupon container pad-top-lg pad-bottom-md">
 				<div class="row">
 					<header class="col-xs-12 text-center header">
@@ -76,17 +37,57 @@
 										</div>
 										<div class="txt-holder">
 											<h3 class="heading6"><a th:href="@{'/offre/' + ${produitActif.id}}"><th:block th:text="${produitActif.nom}"></th:block></a></h3>
-											<ul class="list-unstyled list-show">
-												<li><a href="#"><i class="icon icon-smile"></i> Verified</a></li>
-												<li><a href="#"><i class="icon icon-user"></i> Used</a></li>
-											</ul>
-											<a id="btnAjoutPanier" th:href="@{'/validerCommande/promotion/' + ${produitActif.id}}" class="btn-primary md-round text-center text-uppercase">Acheter</a>
+											<a sec:authorize="!hasAuthority('ENTREPRENEUR')" id="btnAjoutPanier" th:href="@{'/validerCommande/promotion/' + ${produitActif.id}}" class="btn-primary md-round text-center text-uppercase">Acheter</a>
 											<time class="time text-center" datetime="2017-02-03 20:00">Echu à : <th:block th:text="${produitActif.dateFin}"></th:block></time>
 										</div>
 									</div>
 								</div>
 					</th:block>
 				</div>				
+			</section>
+			<section class="counter-sec bg-ful overlay pad-top-sm pad-bottom-xs" style="background-image: url(images/img24.jpg);">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-sm-3 text-center mar-bottom-xs">
+							<span class="icon"><i class="icon-user2"></i></span>
+							<strong class="counter" th:text="${totalClients}"></strong>
+							<span class="sub-title">Clients Enregistrés</span>
+						</div>
+						<div class="col-xs-12 col-sm-3 text-center mar-bottom-xs">
+							<span class="icon"><i class="icon-scissors"></i></span>
+							<strong class="counter" th:text="${totalCommandes}"></strong>
+							<span class="sub-title">Commandes Effectuées</span>
+						</div>
+						<div class="col-xs-12 col-sm-3 text-center mar-bottom-xs">
+							<span class="icon"><i class="icon-add"></i></span>
+							<strong class="counter" th:text="${totalProduits}"></strong>
+							<span class="sub-title">Offres Déposées</span>
+						</div>
+						<div class="col-xs-12 col-sm-3 text-center mar-bottom-xs">
+							<span class="icon"><i class="icon-store"></i></span>
+							<strong class="counter" th:text="${totalEntrepreneur}"></strong>
+							<span class="sub-title">Entrepreneurs Enregistrés</span>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section class="store-sec bg-grey pad-top-lg pad-bottom-lg">
+				<div class="container">
+					<div class="row">
+						<header class="col-xs-12 text-center header">
+							<h3 class="heading">Plus que <span class="clr"><th:block th:text="${totalEntrepreneur}"></th:block>+ Entrepreneurs</span> dans une seule place!</h3>
+						</header>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<ul class="list-unstyled store-logo">
+							<th:block th:each="entrepreneur : ${entrepreneurs}">
+								<li><a th:href="@{'/entrepreneur/'+${entrepreneur.id}}"><img src="images/logo01.png" alt="LOGO" class="img-responsive"></a></li>
+							</th:block>
+							</ul>
+						</div>
+					</div>
+				</div>
 			</section>
 		</main>
 		
@@ -101,13 +102,5 @@
 	<script th:src="@{/js/jquery.js}"></script>
 	<script th:src="@{/js/plugins.js}"></script>
 	<script th:src="@{/js/jquery.main.js}"></script>
-	<script>
-		$('#btnAjoutPanier').click(function(e){
-		   item += 1;
-		   $(this).prop('disabled', true);
-		   $(this).css('background-color','green');
-		   $(this).text('Ajouté');
-		});
-	</script>
 </body>
 </html>

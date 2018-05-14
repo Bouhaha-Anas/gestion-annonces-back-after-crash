@@ -65,4 +65,9 @@ public class ClientService
 	{
 		return clientRepository.findOneByAdresseMail(adresseMail);
 	}
+	
+	public int totalClients()
+	{
+		return clientRepository.totalClients();
+	}
 }

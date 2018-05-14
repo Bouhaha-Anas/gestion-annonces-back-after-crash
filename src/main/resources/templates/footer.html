@@ -2,7 +2,7 @@
 			<div class="footer-holder container">
 				<div class="row">
 					<div class="col-xs-12">
-						<div class="col1">
+						<div class="col-md-10">
 							<h3 class="text-uppercase">Contact Univers-Promo</h3>
 							<ul class="list-unstyled contact-list">
 								<li>
@@ -19,27 +19,15 @@
 								</li>
 							</ul>
 						</div>
-						<div class="col2">
+						<div class="col-md-2">
 							<h3 class="text-uppercase">Liens Rapides</h3>
 							<ul class="list-unstyled f-nav">
 								<li><a href="#">A propos de nous</a></li>
-								<li><a href="#">Entrepreneurs</a></li>
+								<li sec:authorize="hasAuthority('CLIENT')"><a th:href="@{/profilClient/mesCommandes}">Commandes</a></li>
+								<li sec:authorize="hasAuthority('CLIENT')"><a th:href="@{/notifications}">Notifications</a></li>						
 								<li sec:authorize="hasAuthority('CLIENT')"><a th:href="@{/profilClient/informationsPersonnelles}">Profil</a></li>
 								<li sec:authorize="hasAuthority('ENTREPRENEUR')"><a th:href="@{/profilEntrepreneur/informationsPersonnelles}">Profil</a></li>
-								<li><a href="#">Offres</a></li>
-							</ul>
-						</div>
-						<div class="col3">
-							<h3 class="text-uppercase">Categories</h3>
-							<ul class="list-unstyled tags">
-								<li><a href="#">Restaurants</a></li>
-								<li><a href="#">Health</a></li>
-								<li><a href="#">Fitness</a></li>
-								<li><a href="#">Events</a></li>
-								<li><a href="#">Beauty</a></li>
-								<li><a href="#">Sports</a></li>
-								<li><a href="#">Electronics</a></li>
-								<li><a href="#">Watches</a></li>
+								
 							</ul>
 						</div>
 					</div>

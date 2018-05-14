@@ -19,8 +19,13 @@ public class CommandeService
 		commandeRepository.save(commande);
 	}
 	
-	public List<Commande> getCommandeByIdClient(Long idC)
+	public List<Commande> findCommandeByClient(Long idC)
 	{
-		return commandeRepository.getCommandeByIdClient(idC);
+		return commandeRepository.findCommandeByClient(idC);
+	}
+	
+	public int totalCommandes()
+	{
+		return commandeRepository.totalCommandes();
 	}
 }
