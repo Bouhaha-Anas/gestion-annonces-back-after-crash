@@ -67,7 +67,7 @@ public class CommandeController
 		commande.setDateCommande(new Date());
 		commande.setClient(client);
 		commande.setProduit(produit);
-		commandeService.addCommande(commande);
+		commandeService.addCommande(commande); 
 		
 		modelAndView.addObject("successMessage", "Votre commande est effectuée avec succés" );
 		modelAndView.setViewName("accueil");

@@ -6,7 +6,6 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -39,7 +38,7 @@ public class Produit implements Serializable
 	@Column( columnDefinition="boolean default true" )
 	private Boolean estActive;
 	
-	@ManyToOne( fetch = FetchType.EAGER )
+	@ManyToOne
 	@JoinColumn( name = "entrepreneur_id" )
 	private Entrepreneur entrepreneur;
 	

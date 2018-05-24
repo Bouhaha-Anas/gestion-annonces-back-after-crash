@@ -23,7 +23,7 @@
 									<div class="col-xs-12 col-sm-6 col-md-3">						
 										<div class="coupon-box mar-bottom-xs">
 											<div class="img-holder">
-												<img th:src="@{/images/img02.jpg}" alt="image description" class="img-resposnive">
+												<img th:src="@{'/images/uploaded-images/images-produits/'+${produit.image}}" style="min-height: 270px;max-height: 270px" alt="image description" class="img-resposnive">
 											</div>
 											<div class="txt-holder">
 												<h3 class="heading6"><a th:href="@{'/offre/' + ${produit.id}}"><th:block th:text="${produit.nom}"></th:block></a></h3>
@@ -43,8 +43,6 @@
 					</div>
 				</th:block>				
 			</section>
-			
-			
 		</main>
 		
 		<footer th:replace="~{footer}" id="footer" >

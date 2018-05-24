@@ -22,7 +22,7 @@
 						<div class="col-md-2">
 							<h3 class="text-uppercase">Liens Rapides</h3>
 							<ul class="list-unstyled f-nav">
-								<li><a href="#">A propos de nous</a></li>
+								<li><a th:href="@{/a-propos-de-nous}">A propos de nous</a></li>
 								<li sec:authorize="hasAuthority('CLIENT')"><a th:href="@{/profilClient/mesCommandes}">Commandes</a></li>
 								<li sec:authorize="hasAuthority('CLIENT')"><a th:href="@{/notifications}">Notifications</a></li>						
 								<li sec:authorize="hasAuthority('CLIENT')"><a th:href="@{/profilClient/informationsPersonnelles}">Profil</a></li>

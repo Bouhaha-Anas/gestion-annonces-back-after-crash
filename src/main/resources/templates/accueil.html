@@ -33,11 +33,11 @@
 								<div class="col-xs-12 col-sm-6 col-md-3">						
 									<div class="coupon-box mar-bottom-xs">
 										<div class="img-holder">
-											<img src="images/img02.jpg" alt="image description" class="img-resposnive">
+											<img th:src="@{'/images/uploaded-images/images-produits/'+${produitActif.image}}" style="min-height: 270px;max-height: 270px" alt="image description" class="img-resposnive">
 										</div>
 										<div class="txt-holder">
 											<h3 class="heading6"><a th:href="@{'/offre/' + ${produitActif.id}}"><th:block th:text="${produitActif.nom}"></th:block></a></h3>
-											<a sec:authorize="!hasAuthority('ENTREPRENEUR')" id="btnAjoutPanier" th:href="@{'/validerCommande/promotion/' + ${produitActif.id}}" class="btn-primary md-round text-center text-uppercase">Acheter</a>
+											<a sec:authorize="!hasAuthority('ENTREPRENEUR')" th:href="@{'/validerCommande/promotion/' + ${produitActif.id}}" class="btn-primary md-round text-center text-uppercase">Acheter</a>
 											<time class="time text-center" datetime="2017-02-03 20:00">Echu à : <th:block th:text="${produitActif.dateFin}"></th:block></time>
 										</div>
 									</div>
@@ -51,7 +51,7 @@
 						<div class="col-xs-12 col-sm-3 text-center mar-bottom-xs">
 							<span class="icon"><i class="icon-user2"></i></span>
 							<strong class="counter" th:text="${totalClients}"></strong>
-							<span class="sub-title">Clients Enregistrés</span>
+							<span class="sub-title">Clients Inscrits</span>
 						</div>
 						<div class="col-xs-12 col-sm-3 text-center mar-bottom-xs">
 							<span class="icon"><i class="icon-scissors"></i></span>
@@ -66,7 +66,7 @@
 						<div class="col-xs-12 col-sm-3 text-center mar-bottom-xs">
 							<span class="icon"><i class="icon-store"></i></span>
 							<strong class="counter" th:text="${totalEntrepreneur}"></strong>
-							<span class="sub-title">Entrepreneurs Enregistrés</span>
+							<span class="sub-title">Entrepreneurs Inscrits</span>
 						</div>
 					</div>
 				</div>
@@ -82,7 +82,7 @@
 						<div class="col-xs-12">
 							<ul class="list-unstyled store-logo">
 							<th:block th:each="entrepreneur : ${entrepreneurs}">
-								<li><a th:href="@{'/entrepreneur/'+${entrepreneur.id}}"><img src="images/logo01.png" alt="LOGO" class="img-responsive"></a></li>
+								<li><a th:href="@{'/entrepreneur/'+${entrepreneur.id}}"><img th:src="@{'/images/uploaded-images/images-entrepreneurs/'+${entrepreneur.logo}}" alt="LOGO" class="img-responsive"></a></li>
 							</th:block>
 							</ul>
 						</div>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Accueil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		<main id="main">
+			<section class="latest-coupon container pad-top-lg pad-bottom-md">
+				<strong></strong>
+				<div class="jumbotron jumbotron-fluid">
+	  			<div class="container">
+	  				<img th:src="@{/images/logo.png}">
+		    		<h3>À propos de nous :</h3> 
+		    		<strong style="color: red;">Comment est né Univers-Promo ? </strong>
+		    		<br><br>
+		    		<span>
+		    			Dans le cadre d'un projet de fin d'année à l'Ecole Pluridisciplinaire Internationale EPI Sousse, nous étions chargé
+		    			de concevoir et réaliser cette application.
+		    		</span>
+		    		<br><br>
+		    		<span>
+		    			Univers-Promo ancre son identité à la frontière de trois tendances : le développement du e-commerce, le besoin d’acheter
+		    			moins cher et l’aspiration à consommer mieux et proche de chez soi.
+		    		</span>
+		    		<br><br>
+				    <span>
+				    	Devant un large choix de produits ou de services en vente sur le web, l’achat groupé vous permet de :
+				    	+ Acheter rapidement et facilement en ligne. <br/>
+				    	+ Découvrir ou redécouvrir les bonnes adresses en Tunisie. <br/>
+				    	+ Vous offrir des expériences uniques que vous n’auriez jamais tentés au prix. <br/>
+				    </span>
+	  			</div>
+		</div>
+				
+										
+			</section>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+</body>
+</html>

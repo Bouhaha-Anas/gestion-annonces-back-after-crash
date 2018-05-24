@@ -26,7 +26,7 @@
 							<a th:href="@{/accueil}"><img th:src="@{/images/logo.png}" alt="Coupmy" class="img-responsive"></a>
 						</div>
 						<div class="search-cart">
-							<form autocomplete="off" th:action="@{/resultatRecherche}" th:method="POST" class="search-form">
+							<form autocomplete="off" th:action="@{/resultatRecherche}" th:method="post" class="search-form">
 								<fieldset>
 									<select name="nomC">
 										<option value="0">Selectionner Catégorie</option>
@@ -75,7 +75,7 @@
 										<a href="#">Profil</a>
 										<ul class="drop-down list-unstyled">
 											<li><a th:href="@{/profilEntrepreneur/informationsPersonnelles}">Informations Personnelles</a></li>
-											<li><a th:href="@{/profilClient/mesOffres}">Mes offres</a></li>
+											<li><a th:href="@{/profilEntrepreneur/mesOffres}">Mes offres</a></li>
 										</ul>
 									</li>
 								</ul>

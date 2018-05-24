@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Accueil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		
+		<main id="main">
+			<!-- twocolumns of the page -->
+			<div class="twocolumns pad-top-lg pad-bottom-lg">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12">
+							<!-- Content of the page -->
+							<article id="content">
+								<!-- header content of the page -->
+								<header class="header-content">
+									<div th:if="${ successMessage != null }" class="alert alert-success alert-dismissible fade in">
+    									<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    									<strong th:text="${successMessage}" ></strong>	
+  									</div>
+  									<div th:if="${ errorMessage != null }" class="alert alert-danger alert-dismissible fade in">
+    									<a class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    									<strong th:text="${errorMessage}" ></strong>	
+  									</div>
+									<h2 class="heading3">Modification de l'offre</h2>
+									<p><i>Remplir ce formulaire pour valider votre modification !</i></p>
+								</header>
+								<!-- Sub Form of the page -->
+								<form autocomplete="off" th:action="@{'/modification/offre/'+${produit.id}}" th:method="put" th:object="${produit}" class="sub-form">
+									<fieldset>
+										<div class="form-group">
+											<div class="col">
+												<label>Nom <span class="clr">*</span></label>
+												<input type="text" th:field="*{nom}" th:value="${produit.nom}" class="form-control" required="required" />
+											</div>
+											<div class="col">
+												<label>Catégorie <span class="clr">*</span></label>
+												<select name="choixCategorie">
+													<option th:selected="${produit.categorie}" th:each="categorie : ${#servletContext.getAttribute('categories')}" th:text="${categorie.nom}"></option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col">
+												<label>Date échéance <span class="clr">*</span></label>
+												<input type="date" name="dateFinS" class="form-control" required="required" />
+											</div>
+										</div>
+										<div class="form-group">
+											<div class="col">
+												<label>Prix avant promotion <span class="clr">*</span></label>
+												<input type="number" th:field="*{prixAvantRed}" th:value="${produit.prixAvantRed}" class="form-control" required="required" />
+											</div>
+											<div class="col">
+												<label>Prix après promotion <span class="clr">*</span></label>
+												<input type="number" th:field="*{prixApresRed}" th:value="${produit.prixApresRed}" class="form-control" required="required" />
+											</div>
+										</div>
+										<div class="form-group">
+											<label>Description <span class="clr">*</span></label>
+											<textarea th:field="*{description}" th:value="${produit.description}" required="required" ></textarea>
+										</div>
+										<input type="hidden" th:field="*{image}" th:value="${produit.image}"/>
+										<input type="hidden" name="dateDeb" th:value="${produit.dateDebut}"/>
+										<input type="hidden" th:field="*{estActive}" th:value="${produit.estActive}"/>					
+										<button class="btn-primary text-center text-uppercase">Enregistrer</button>
+									</fieldset>
+								</form>
+							</article>					
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+</body>
+</html>

@@ -66,5 +66,13 @@ public class AcceuilController
 		modelAndView.setViewName("accueil");
 		
 		return modelAndView;
-	}	
+	}
+	
+	@RequestMapping( value= "/a-propos-de-nous", method = RequestMethod.GET )
+	public ModelAndView propos()
+	{
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("propos");
+		return modelAndView;
+	}
 }

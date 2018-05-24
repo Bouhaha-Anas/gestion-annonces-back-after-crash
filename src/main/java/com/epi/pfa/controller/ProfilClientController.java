@@ -176,20 +176,29 @@ public class ProfilClientController
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		String mdp = request.getParameter("mdp");
+		Compte compte = compteService.findOneButNotMe(client.getCompte().getLogin(), client.getCompte().getId());
 		
-		if( mdp.equals(client.getCompte().getMotDePasse()) )
+		if( compte == null )
 		{
-			clientService.updateClient(client);
-			String successMessage = "Vos informations sont mises à jour avec succés";
-			modelAndView.addObject("successMessage", successMessage );
+			if( mdp.equals(client.getCompte().getMotDePasse()) )
+			{
+				clientService.updateClient(client);
+				String successMessage = "Vos informations sont mises à jour avec succés";
+				modelAndView.addObject("successMessage", successMessage );
+			}
+			else
+			{
+				String errorMessage = "Vérifier votre mot de passe saisi";
+				modelAndView.addObject("errorMessage", errorMessage );
+			}
 		}
 		else
 		{
-			String errorMessage = "Vérifier votre mot de passe saisi";
+			String errorMessage = "Le nom d'utilisateur existe déjà, réessayer";
 			modelAndView.addObject("errorMessage", errorMessage );
-		}		
-		modelAndView.setViewName("profilClient");
+		}
 		
+		modelAndView.setViewName("profilClient");
 		return modelAndView;
 	}
 }

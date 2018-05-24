@@ -33,19 +33,15 @@
 								<!-- post detail of the page -->
 								<div class="post-detail style2">
 									<div class="img-holder">
-										<img th:src="@{/images/uploaded-images/images-produits/${produit.image}}" alt="image description" class="img-responsive">
+										<img th:src="@{'/images/uploaded-images/images-produits/'+${produit.image}}" alt="image description" class="img-responsive">
 									</div>
 									<div class="txt-holder">
 										<header class="header">
 											<div class="coupon-logo">
-												<img th:src="@{/images/uploaded-images/images-entrepreneurs/${produit.entrepreneur.logo}}" alt="Red Cart" class="img-responsive">
+												<img th:src="@{'/images/uploaded-images/images-entrepreneurs/'+${produit.entrepreneur.logo}}" alt="Red Cart" class="img-responsive">
 											</div>
 											<div class="align-left">
 												<h3 class="heading3" th:text="${produit.nom}"></h3>
-												<ul class="list-unstyled list-show">
-													<li><a href="#"><i class="icon icon-smile"></i> Verified</a></li>
-													<li><a href="#"><i class="icon icon-user"></i> 35 Used</a></li>
-												</ul>
 											</div>
 										</header>
 										<p th:text="${produit.description}" ></p>
@@ -56,34 +52,34 @@
 								</div>
 							</article>
 							<aside id="sidebar">
-								<!-- Widget of the page -->
+							<!-- Widget of the page -->
 								<section class="widget search-widget">
-									<div>
-										<strong style="color: #514095;font-size: 18px;font-weight: 700;margin-bottom: 8px;"><th:block th:text="${produit.entrepreneur.denominationSociale}"></th:block> :</strong>
-									</div>
-									<hr>
+									<strong style="color: #514095;font-size: 18px;font-weight: 700;margin-bottom: 8px;">Informations relatives à <th:block th:text="${produit.entrepreneur.denominationSociale}"></th:block></strong>
 									<div>
 										<strong><span>Adresse : </span></strong><th:block th:text="${produit.entrepreneur.siegeSocial}" ></th:block><br/>
 										<strong><span>Téléphone : </span></strong><th:block th:text="${produit.entrepreneur.telephone}" ></th:block><br/>
 										<strong><span>E-mail : </span></strong><th:block th:text="${produit.entrepreneur.adresseMail}" ></th:block><br/>
 									</div>
-									
 								</section>
 								<!-- Widget of the page -->
+								<hr>
+								<section class="widget search-widget">
+								<strong style="color: #514095;font-size: 18px;font-weight: 700;margin-bottom: 8px;">Chercher les offres de <th:block th:text="${produit.entrepreneur.denominationSociale}"></th:block></strong>	
+									<form autocomplete="off" th:action="@{'/entrepreneur/'+${produit.entrepreneur.id}+'/resultatRecherche'}" th:method="post" class="search-form">
+										<fieldset>
+											<input type="search" name="nomP" class="form-control" placeholder="Mots-clés">
+											<button type="submit" class="sub-btn text-center text-uppercase">vas-y</button>
+										</fieldset>
+									</form>
+								</section>
+								<hr>
 								<section class="widget category-widget">
-									
-								</section>
-								<!-- Widget of the page -->
-								<section class="widget popular-widget">
-									
-								</section>
-								<!-- Widget of the page -->
-								<section class="widget news-widget">
-									
-								</section>
-								<!-- Widget of the page -->
-								<section class="widget tags-widget">
-									
+									<h3 class="heading4">Categories</h3>
+									<ul class="list-unstyled category-list">
+										<th:block th:each="categorie : ${#servletContext.getAttribute('categories')}">
+											<li><a th:href="@{'/categorie/'+${categorie.id}+'/offres'}"><span class="pull-left" th:text="${categorie.nom}"></span></a></li>
+										</th:block>
+									</ul>
 								</section>
 							</aside>							
 						</div>

@@ -45,7 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 	{
 		http
 			.authorizeRequests()
+			.antMatchers("/entrepreneur/{id}/resultatRecherche").permitAll()
 			.antMatchers("/resultatRecherche").permitAll()
+			.antMatchers("/a-propos-de-nous").permitAll()
 			.antMatchers("/inscriptionEntrepreneur").permitAll()
 			.antMatchers("/confirmationInscription").permitAll()
 			.antMatchers("/inscriptionConfirm**").permitAll()		
@@ -57,7 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 			.antMatchers("/accueil").permitAll()
 			.antMatchers("/login").permitAll()
 			.antMatchers("/validerCommande/promotion/{id}", "/profilClient/informationsPersonnelles", "/profilClient/mesCommandes", "/profilClient/mesRecommandations").hasAnyAuthority("CLIENT")
-			.antMatchers("/nouvelleOffre", "/profilEntrepreneur/informationsPersonnelles","/profilEntrepreneur/informationsPersonnelles/modification").hasAnyAuthority("ENTREPRENEUR")
+			.antMatchers("/modification/offre/{id}", "desactiverOffre/{id}", "profilEntrepreneur/mesOffres","/nouvelleOffre", "/profilEntrepreneur/informationsPersonnelles","/profilEntrepreneur/informationsPersonnelles/modification").hasAnyAuthority("ENTREPRENEUR")
 			.anyRequest()
 				.authenticated()
 			.and()
@@ -76,16 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter
 				.logoutSuccessUrl("/accueil")
 			.and()
 			.exceptionHandling()
-				.accessDeniedHandler(accessDeniedHandler);
-		
-//		http.sessionManagement()
-//        	.sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
-//        	.maximumSessions(2)
-//        	.expiredUrl("/sessionExpired.html")
-//        	.and()
-//        	.invalidSessionUrl("/invalidSession.html");
-			
-		
+				.accessDeniedHandler(accessDeniedHandler);		
 	}
 	
 	@Bean

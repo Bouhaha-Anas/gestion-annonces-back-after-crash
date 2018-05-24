@@ -35,6 +35,7 @@ public class ProduitController
 {
 	
 	public static final String CHEMIN_FICHIERS_PRODUITS = "D:/Ingenieurie/Semestre2/PFA/Work-Space/gestion-annonces/src/main/resources/static/images/uploaded-images/images-produits/";
+	public static final String CHEMIN_FICHIERS_PRODUITS_BACK_OFFICE = "D:/Ingenieurie/Semestre2/PFA/Work-Space/gestion-annonces-back-office/src/main/resources/static/uploaded-images/images-produits/";
 	
 	@Autowired
 	private ProduitService produitService;
@@ -89,29 +90,39 @@ public class ProduitController
 			e.printStackTrace();
 		}
 		
-		Part part = request.getPart("imageP");
-		String nomFichier = UploadingTask.getNomFichier(part);
-		if (nomFichier != null && !nomFichier.isEmpty()) 
-		{	   
-            nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1).substring(nomFichier.lastIndexOf('\\') + 1);
-            UploadingTask.ecrireFichier(part, nomFichier, CHEMIN_FICHIERS_PRODUITS);
-            
-            produit.setImage(nomFichier);
-            produit.setEstActive(true);
-    		produit.setDateFin(dateFin);
-    		produit.setDateDebut(new Date());
-    		produit.setCategorie(categorie);
-    		produit.setEntrepreneur(entrepreneur);
-    		produitService.addProduit(produit);
-    		successMessage = "Votre promotion est ajouté avec succés.";
-        }
+		if( dateFin.after(new Date()) == true )
+		{
+			Part part = request.getPart("imageP");
+			String nomFichier = UploadingTask.getNomFichier(part);
+			if (nomFichier != null && !nomFichier.isEmpty()) 
+			{	   
+	            nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1).substring(nomFichier.lastIndexOf('\\') + 1);
+	            UploadingTask.ecrireFichier(part, nomFichier, CHEMIN_FICHIERS_PRODUITS);
+	            UploadingTask.ecrireFichier(part, nomFichier, CHEMIN_FICHIERS_PRODUITS_BACK_OFFICE);
+	            
+	            produit.setImage(nomFichier);
+	            produit.setEstActive(true);
+	    		produit.setDateFin(dateFin);
+	    		produit.setDateDebut(new Date());
+	    		produit.setCategorie(categorie);
+	    		produit.setEntrepreneur(entrepreneur);
+	    		produitService.addProduit(produit);
+	    		successMessage = "Votre promotion est ajouté avec succés.";
+	    		modelAndView.addObject("successMessage", successMessage);
+	        }
+			else
+			{
+				errorMessage = "Veuillez choisir une photo pour votre offre.";
+				modelAndView.addObject("errorMessage", errorMessage);
+			}
+		}
 		else
 		{
-			errorMessage = "Veuillez choisir une photo pour votre offre.";
+			errorMessage = "La date d'échéance doit être supérieure à la date actuelle !";
+			modelAndView.addObject("errorMessage", errorMessage);
 		}
+				
 		
-		modelAndView.addObject("successMessage", successMessage);
-		modelAndView.addObject("errorMessage", errorMessage);
 		modelAndView.setViewName("nouvelleOffre");
 		return modelAndView;
 	}
@@ -141,14 +152,25 @@ public class ProduitController
 		return modelAndView;
 	}
 	
-	@RequestMapping( value= "/resultatRecherche", method = RequestMethod.POST )
+	@RequestMapping( value= "/resultatRecherche", method = RequestMethod.POST ) 
 	public ModelAndView pageRecherche(HttpServletRequest request) throws IOException, ServletException
 	{
 		ModelAndView modelAndView = new ModelAndView();
 		String nomP = request.getParameter("nomP");
 		String nomC = request.getParameter("nomC");
 		List<Produit> rechercheProduits = produitService.searchByCategorie(nomP, nomC);
+		modelAndView.addObject("rechercheProduits", rechercheProduits);
+		modelAndView.setViewName("resultatRecherche");
 		
+		return modelAndView;
+	}
+	
+	@RequestMapping( value= "/entrepreneur/{id}/resultatRecherche", method = RequestMethod.POST ) 
+	public ModelAndView pageRechercheByEntrepreneur(@PathVariable("id") Long id, HttpServletRequest request) throws IOException, ServletException
+	{
+		ModelAndView modelAndView = new ModelAndView();
+		String nomP = request.getParameter("nomP");
+		List<Produit> rechercheProduits = produitService.searchByEntrepreneur(nomP, id);
 		modelAndView.addObject("rechercheProduits", rechercheProduits);
 		modelAndView.setViewName("resultatRecherche");
 		

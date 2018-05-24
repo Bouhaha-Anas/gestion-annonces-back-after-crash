@@ -33,6 +33,8 @@ public class InscriptionController
 {
 	public static final String CHEMIN_FICHIERS_CLIENTS = "D:/Ingenieurie/Semestre2/PFA/Work-Space/gestion-annonces/src/main/resources/static/images/uploaded-images/images-clients/";
 	public static final String CHEMIN_FICHIERS_ENTREPRENEURS = "D:/Ingenieurie/Semestre2/PFA/Work-Space/gestion-annonces/src/main/resources/static/images/uploaded-images/images-entrepreneurs/";
+	public static final String CHEMIN_FICHIERS_CLIENTS_BACK_OFFICE = "D:/Ingenieurie/Semestre2/PFA/Work-Space/gestion-annonces-back-office/src/main/resources/static/uploaded-images/images-clients/";
+	public static final String CHEMIN_FICHIERS_ENTREPRENEURS_BACK_OFFICE = "D:/Ingenieurie/Semestre2/PFA/Work-Space/gestion-annonces-back-office/src/main/resources/static/uploaded-images/images-entrepreneurs/";
 	
 	@Autowired
 	ClientService clientService;
@@ -172,7 +174,10 @@ public class InscriptionController
 		ModelAndView modelAndView = new ModelAndView();
 		String errorMessage = null;
 		String mdp = req.getParameter("mdp");
+		Compte compte = compteService.findOneByLogin(client.getCompte().getLogin());
 		
+		if(compte == null)
+		{
 			if( mdp.equals(client.getCompte().getMotDePasse()) )
 			{
 				Part part = req.getPart("imageC");
@@ -181,6 +186,7 @@ public class InscriptionController
 				{	   
 		            nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1).substring(nomFichier.lastIndexOf('\\') + 1);
 		            UploadingTask.ecrireFichier(part, nomFichier, CHEMIN_FICHIERS_CLIENTS);
+		            UploadingTask.ecrireFichier(part, nomFichier, CHEMIN_FICHIERS_CLIENTS_BACK_OFFICE);
 		            client.setImage(nomFichier);
 		            client.getCompte().setEnabled(false);
 		            clientService.addClient(client);
@@ -218,6 +224,15 @@ public class InscriptionController
 				modelAndView.setViewName("inscription");
 				return modelAndView;
 			}
+		}
+		else
+		{
+			errorMessage = "Le nom d'utilisateur existe déjà, réessayer";
+			modelAndView.addObject("errorMessage", errorMessage);
+			modelAndView.addObject("client", new Client());
+			modelAndView.setViewName("inscription");
+			return modelAndView;
+		}
 	}
 	
 	@RequestMapping( value="/inscriptionEntrepreneur", method= RequestMethod.GET )
@@ -305,7 +320,10 @@ public class InscriptionController
 		ModelAndView modelAndView = new ModelAndView();
 		String errorMessage = null;
 		String mdp = req.getParameter("mdp");
-
+		Compte compte = compteService.findOneByLogin(entrepreneur.getCompte().getLogin());
+		
+		if(compte == null)
+		{
 			if( mdp.equals(entrepreneur.getCompte().getMotDePasse()) )
 			{
 				Part part = req.getPart("logoE");
@@ -314,6 +332,7 @@ public class InscriptionController
 				{	   
 		            nomFichier = nomFichier.substring(nomFichier.lastIndexOf('/') + 1).substring(nomFichier.lastIndexOf('\\') + 1);
 		            UploadingTask.ecrireFichier(part, nomFichier, CHEMIN_FICHIERS_ENTREPRENEURS);
+		            UploadingTask.ecrireFichier(part, nomFichier, CHEMIN_FICHIERS_ENTREPRENEURS_BACK_OFFICE);
 		            entrepreneur.setLogo(nomFichier);
 		            entrepreneur.getCompte().setEnabled(false);
 					entrepreneurService.addEntrepreneur(entrepreneur);
@@ -351,5 +370,14 @@ public class InscriptionController
 				modelAndView.setViewName("inscription");
 				return modelAndView;
 			}
+		}
+		else
+		{
+			errorMessage = "Le nom d'utilisateur existe déjà, réessayer";
+			modelAndView.addObject("errorMessage", errorMessage);
+			modelAndView.addObject("entrepreneur", new Entrepreneur());
+			modelAndView.setViewName("inscription");
+			return modelAndView;
+		}
 	}
 }

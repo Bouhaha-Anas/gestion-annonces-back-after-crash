@@ -26,4 +26,9 @@ public class CompteService
 	{
 		compteRepository.save(compte);
 	}
+	
+	public Compte findOneButNotMe(String login,Long id )
+	{
+		return compteRepository.findOneButNotMe(login, id);
+	}
 }

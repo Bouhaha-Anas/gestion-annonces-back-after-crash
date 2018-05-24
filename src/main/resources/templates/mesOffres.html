@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	  xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head th:include="headerTag :: headerFragment" >
+	<title>Accueil</title>
+</head>
+<body>
+	<div id="wrapper" >
+		<header th:replace="~{head}" id="header">
+		</header>
+		<main id="main">
+			<section class="latest-coupon container pad-top-lg pad-bottom-md">
+				<th:block th:if="${!produitsNonActifs.empty}">
+					<h3>Mes offres Actives :</h3>
+				</th:block>
+				<th:block th:if="${produitsNonActifs.empty}">
+					<h3>Toutes vos offres sont actives.</h3>
+				</th:block>
+				<br><br>
+				<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Nom</th>
+									<th>Description</th>
+									<th>Catégorie</th>
+									<th>Ancien Prix</th>
+									<th>Nouveau prix</th>
+									<th>Date début</th>
+									<th>Date fin</th>
+									<th colspan="2">Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="produit : ${produitsActifs}">
+									<td th:text="${produit.nom}"></td>
+									<td th:text="${produit.description}"></td>
+									<td th:text="${produit.Categorie.nom}"></td>
+									<td th:text="${produit.prixAvantRed}"></td>
+									<td th:text="${produit.prixApresRed}"></td>
+									<td th:text="${produit.dateDebut}"></td>
+									<td th:text="${produit.dateFin}"></td>
+									<td colspan="2">
+										<form th:action="@{'/modification/offre/'+${produit.id}}" th:method="get">
+											<input type="submit" value="Modifier" class="btn btn-warning" />
+										</form>
+										<form th:action="@{'/desactiverOffre/'+${produit.id}}" th:method="put">
+											<input type="submit" value="Désactiver" class="btn btn-danger" />
+										</form>
+									</td>
+								</tr>
+							</tbody>
+				</table>						
+			</section>
+			<section class="latest-coupon container pad-top-lg pad-bottom-md" th:if="${!produitsNonActifs.empty}">
+				<h3>Mes offres Passées :</h3>
+				<br><br>
+				<table class="table table-hover">
+							<thead>
+								<tr>
+									<th>Nom</th>
+									<th>Description</th>
+									<th>Catégorie</th>
+									<th>Ancien Prix</th>
+									<th>Nouveau prix</th>
+									<th>Date début</th>
+									<th>Date fin</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="produit : ${produitsNonActifs}">
+									<td th:text="${produit.nom}"></td>
+									<td th:text="${produit.description}"></td>
+									<td th:text="${produit.Categorie.nom}"></td>
+									<td th:text="${produit.prixAvantRed}"></td>
+									<td th:text="${produit.prixApresRed}"></td>
+									<td th:text="${produit.dateDebut}"></td>
+									<td th:text="${produit.dateFin}"></td>
+								</tr>
+							</tbody>
+				</table>						
+			</section>
+		</main>
+		
+		<footer th:replace="~{footer}" id="footer" >
+		</footer>
+		
+		<span id="back-top" class="text-center md-round fa fa-angle-up"></span>
+		<div id="loader" class="loader-holder">
+			<div class="block"><img th:src="@{/images/svg/bars.svg}" width="60" alt="loader"></div>
+		</div>	
+	</div> 
+	<script th:src="@{/js/jquery.js}"></script>
+	<script th:src="@{/js/plugins.js}"></script>
+	<script th:src="@{/js/jquery.main.js}"></script>
+</body>
+</html>

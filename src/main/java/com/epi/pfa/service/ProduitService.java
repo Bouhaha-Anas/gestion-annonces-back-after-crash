@@ -60,6 +60,11 @@ public class ProduitService
 		return produitRepository.searchByCategorie(nomP, nomC);
 	}
 	
+	public List<Produit> searchByEntrepreneur(String nomP, Long idE)
+	{
+		return produitRepository.searchByEntrepreneur(nomP, idE);
+	}
+	
 	public List<Produit> getByDateAndCategorieId(Date date, Long id)
 	{
 		return produitRepository.getByDateAndCategorieId(date, id);
@@ -73,6 +78,16 @@ public class ProduitService
 	public List<Produit> findByCategorieAndState(Long idC) 
 	{
 		return produitRepository.findByCategorieAndState(idC);
+	}
+	
+	public List<Produit> findAllActivatedByEntrepreneur(Long idE)
+	{
+		return produitRepository.findAllActivatedByEntrepreneur(idE);
+	}
+	
+	public List<Produit> findAllDisactivatedByEntrepreneur(Long idE)
+	{
+		return produitRepository.findAllDisactivatedByEntrepreneur(idE);
 	}
 	
 }

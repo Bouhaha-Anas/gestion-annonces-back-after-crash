@@ -21,7 +21,7 @@ public class Categorie implements Serializable
 	private Long id;
 	private String nom;
 	
-	@OneToMany( cascade=CascadeType.ALL, orphanRemoval = true, mappedBy = "categorie", fetch=FetchType.LAZY )
+	@OneToMany( cascade=CascadeType.ALL, orphanRemoval = true, mappedBy = "categorie", fetch = FetchType.LAZY )
 	private List<Produit> produits;
 	
 	@OneToMany( mappedBy="categorie" )
@@ -68,5 +68,7 @@ public class Categorie implements Serializable
 	public String toString() {
 		return "Categorie [id=" + id + ", nom=" + nom + ", produits=" + produits + ", recommandations="
 				+ recommandations + "]";
-	}	
+	}
+
+	 	
 }
