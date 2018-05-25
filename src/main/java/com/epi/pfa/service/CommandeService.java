@@ -21,7 +21,7 @@ public class CommandeService
 	
 	public List<Commande> findCommandeByClient(Long idC)
 	{
-		return commandeRepository.findCommandeByClient(idC);
+		return commandeRepository.findAllByClientIdIn(idC);
 	}
 	
 	public int totalCommandes()

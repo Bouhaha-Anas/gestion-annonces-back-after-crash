@@ -50,7 +50,7 @@ public class ScheduledTasks
 		calendar.set(Calendar.MILLISECOND, 0);	
 		date = calendar.getTime();
 		
-		List<Produit> produitsExipires = produitService.findByDateFin(date);
+		List<Produit> produitsExipires = produitService.findAllByDateFin(date);
 		if( produitsExipires != null )
 		{
 			for( int i=0 ; i< produitsExipires.size() ; i++ )

@@ -22,22 +22,12 @@ public class ProduitService
 	
 	public List<Produit> getAllActiveProducts()
 	{
-		return produitRepository.getAllActiveProducts();
+		return produitRepository.findAllByEstActiveTrue();
 	}
 	
 	public List<Produit> getAllPassedProducts()
 	{
-		return produitRepository.getAllPassedProducts();
-	}
-	
-	public int getTotalByCategorie(Long id)
-	{
-		return produitRepository.getTotalByCategorie(id);
-	}
-	
-	public List<Produit> findByNomLike(String nom)
-	{
-		return produitRepository.findByNomLike(nom);
+		return produitRepository.findAllByEstActiveFalse();
 	}
 	
 	public Produit getProduit(Long id)
@@ -45,9 +35,9 @@ public class ProduitService
 		return produitRepository.findOne(id);
 	}
 	
-	public List<Produit> findByDateFin(Date date)
+	public List<Produit> findAllByDateFin(Date date)
 	{
-		return produitRepository.findByDateFin(date);
+		return produitRepository.findAllByDateFin(date);
 	}
 	
 	public void updateProduit(Produit produit)
@@ -57,17 +47,17 @@ public class ProduitService
 	
 	public List<Produit> searchByCategorie(String nomP, String nomC)
 	{
-		return produitRepository.searchByCategorie(nomP, nomC);
+		return produitRepository.findAllByNomContainingIgnoreCaseAndCategorieNomOrderByEstActive(nomP, nomC);
 	}
 	
 	public List<Produit> searchByEntrepreneur(String nomP, Long idE)
 	{
-		return produitRepository.searchByEntrepreneur(nomP, idE);
+		return produitRepository.findAllByNomContainingIgnoreCaseAndEntrepreneurIdOrderByEstActive(nomP, idE);
 	}
 	
 	public List<Produit> getByDateAndCategorieId(Date date, Long id)
 	{
-		return produitRepository.getByDateAndCategorieId(date, id);
+		return produitRepository.findAllByDateDebutBeforeAndCategorieIdIn(date, id);
 	}
 	
 	public int totalProduits()
@@ -77,17 +67,17 @@ public class ProduitService
 
 	public List<Produit> findByCategorieAndState(Long idC) 
 	{
-		return produitRepository.findByCategorieAndState(idC);
+		return produitRepository.findAllByCategorieIdInAndEstActiveTrue(idC);
 	}
 	
 	public List<Produit> findAllActivatedByEntrepreneur(Long idE)
 	{
-		return produitRepository.findAllActivatedByEntrepreneur(idE);
+		return produitRepository.findAllByEntrepreneurIdInAndEstActiveTrue(idE);
 	}
 	
 	public List<Produit> findAllDisactivatedByEntrepreneur(Long idE)
 	{
-		return produitRepository.findAllDisactivatedByEntrepreneur(idE);
+		return produitRepository.findAllByEntrepreneurIdInAndEstActiveFalse(idE);
 	}
 	
 }

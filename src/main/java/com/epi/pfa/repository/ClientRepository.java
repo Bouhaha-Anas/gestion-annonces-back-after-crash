@@ -9,7 +9,9 @@ import com.epi.pfa.model.Compte;
 public interface ClientRepository extends JpaRepository<Client, Long>
 {
 	Client findOneByCompte(Compte compte);
+	
 	Client findOneById(Long id);
+	
 	Client findOneByAdresseMail(String adresseMail);
 	
 	@Query( value="select count(*) from clients", nativeQuery= true )
