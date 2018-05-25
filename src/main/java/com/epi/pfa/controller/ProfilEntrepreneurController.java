@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.epi.pfa.model.Categorie;
 import com.epi.pfa.model.Compte;
 import com.epi.pfa.model.Entrepreneur;
 import com.epi.pfa.model.Produit;
+import com.epi.pfa.service.CategorieService;
 import com.epi.pfa.service.CompteService;
 import com.epi.pfa.service.EntrepreneurService;
 import com.epi.pfa.service.ProduitService;
@@ -39,6 +41,9 @@ public class ProfilEntrepreneurController
 	
 	@Autowired
 	private ProduitService produitService;
+	
+	@Autowired
+	CategorieService categorieService;
 	
 	@RequestMapping( value= "/profilEntrepreneur/informationsPersonnelles", method= RequestMethod.GET )
 	public ModelAndView profilEntrepreneurParametresGeneraux()
@@ -136,11 +141,15 @@ public class ProfilEntrepreneurController
 	public ModelAndView modificationOffre(Produit produit, HttpServletRequest request) throws IOException
 	{
 		ModelAndView modelAndView = new ModelAndView();
+		String choixCategorie = request.getParameter("choixCategorie");
 		String date = request.getParameter("dateFinS");
 		String dateDeb = request.getParameter("dateDeb");
+		Long idE = Long.parseLong(request.getParameter("idE"));
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		Date dateFin = null;
 		Date dateDebut = null;
+		Categorie categorie = categorieService.findOneByNom(choixCategorie);
+		Entrepreneur entrepreneur = entrepreneurService.getEntrepreneur(idE);
 		try
 		{
 			dateFin = sdf.parse(date);
@@ -153,6 +162,8 @@ public class ProfilEntrepreneurController
 		
 		if( dateFin.after(new Date()) == true )
 		{
+			produit.setEntrepreneur(entrepreneur);
+			produit.setCategorie(categorie);
 			produit.setDateFin(dateFin);
 			produit.setDateDebut(dateDebut);
 			produitService.updateProduit(produit);

@@ -67,8 +67,9 @@
 											<textarea th:field="*{description}" th:value="${produit.description}" required="required" ></textarea>
 										</div>
 										<input type="hidden" th:field="*{image}" th:value="${produit.image}"/>
+										<input type="hidden" th:field="*{estActive}" th:value="${produit.estActive}"/>							
 										<input type="hidden" name="dateDeb" th:value="${produit.dateDebut}"/>
-										<input type="hidden" th:field="*{estActive}" th:value="${produit.estActive}"/>					
+										<input type="hidden" name="idE" th:value="${produit.entrepreneur.id}"/>					
 										<button class="btn-primary text-center text-uppercase">Enregistrer</button>
 									</fieldset>
 								</form>
