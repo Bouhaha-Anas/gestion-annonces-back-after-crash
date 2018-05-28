@@ -20,4 +20,6 @@ public interface RecommandationRepository extends JpaRepository<Recommandation, 
 	
 	@Query( value="select * from recommandations where id_categorie = :idCat", nativeQuery= true )
 	public List<Recommandation> getByCategorieId(@Param("idCat") Long idCat);
+	
+	Recommandation findByRecommandationPrimaryKeyIdClientIsAndRecommandationPrimaryKeyIdCategorieIs(@Param("idCli") Long idCli, @Param("idCat") Long idCat);
 }

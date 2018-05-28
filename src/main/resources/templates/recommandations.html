@@ -20,13 +20,18 @@
 							  </div>
 							  <div class="card-body">						    
 							    <img style="float: left;" alt="recommandationImg" th:src="@{/images/recommandation.png}">				    
-							   	<p class="card-text"><strong>Choisir vos catégories favorites pour ne pas manquer aucune nouvelle :</strong></p>
-							   	<form th:action="@{/profilClient/mesRecommandations}" th:method="post">
-								   	<select id="mySelect" multiple="multiple" name="cats">
-										<option th:each="rcategorie : ${remainCategories}" th:text="${rcategorie.nom}"></option>
-									</select>
-									<input disabled id="btnSubmit" type="submit" class="btn btn-primary" value="Ajouter à mes favoris" style="float: right;" />
-								</form>
+							   	<th:block th:if="${!remainCategories.empty}">
+							   		<p class="card-text"><strong>Choisir vos catégories favorites pour ne pas manquer aucune nouvelle :</strong></p>
+								   	<form th:action="@{/profilClient/mesRecommandations}" th:method="post">
+									   	<select id="mySelect" multiple="multiple" name="cats">
+											<option th:each="rcategorie : ${remainCategories}" th:text="${rcategorie.nom}"></option>
+										</select>
+										<input disabled id="btnSubmit" type="submit" class="btn btn-primary" value="Ajouter à mes favoris" style="float: right;" />
+									</form>
+							   	</th:block>
+							   	<th:block th:if="${remainCategories.empty}">
+							   		<strong>Vous avez recommandé toutes les catégories disponibles !!</strong>
+							   	</th:block>
 								<hr>
 								<strong>Ce que vous avez déjà recommandé :</strong>
 								<form th:action="@{/profilClient/mesRecommandations}" th:method="delete">

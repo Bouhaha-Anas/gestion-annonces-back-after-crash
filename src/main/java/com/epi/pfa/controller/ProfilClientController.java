@@ -1,10 +1,12 @@
 package com.epi.pfa.controller;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 //import javax.validation.Valid;
 
@@ -101,9 +103,8 @@ public class ProfilClientController
 	}
 	
 	@RequestMapping( value= "/profilClient/mesRecommandations", method= RequestMethod.POST )
-	public ModelAndView profilClientRecommandationsAjout(HttpServletRequest request)
+	public void profilClientRecommandationsAjout(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		ModelAndView modelAndView = new ModelAndView();
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String login = auth.getName();
@@ -127,15 +128,14 @@ public class ProfilClientController
 			recommandationService.addRecommandation(recommandation);		
 		}
 		
-		modelAndView.setViewName("recommandations");
-		
-		return modelAndView;
+
+		response.sendRedirect("/profilClient/mesRecommandations");
 	}
 	
 	@RequestMapping( value= "/profilClient/mesRecommandations", method= RequestMethod.DELETE )
-	public ModelAndView profilClientRecommandationsSupprimer(HttpServletRequest request)
+	public void profilClientRecommandationsSupprimer(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		ModelAndView modelAndView = new ModelAndView();
+		
 		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String login = auth.getName();
@@ -147,12 +147,12 @@ public class ProfilClientController
 		for( int i=0; i < remoCat.length; i++ )
 		{
 			Categorie categorie = categorieService.findOneByNom(remoCat[i]);
-			recommandationService.deleteRecommandation(client.getId(), categorie.getId());
+			Recommandation recommandation = recommandationService.findByIdClientIdAndIdCategorie(client.getId(), categorie.getId());
+			recommandationService.deleteRecommandation(recommandation);
 		}
 		
-		modelAndView.setViewName("recommandations");
+		response.sendRedirect("/profilClient/mesRecommandations");
 		
-		return modelAndView;
 	}
 	
 	@RequestMapping( value="/profilClient/informationsPersonnelles/modification", method= RequestMethod.GET )

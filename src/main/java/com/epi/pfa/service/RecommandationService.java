@@ -23,9 +23,15 @@ public class RecommandationService
 	{
 		recommandationRepository.save(recommandation);
 	}
-	public void deleteRecommandation(Long idCli, Long idCat)
+	
+	public Recommandation findByIdClientIdAndIdCategorie(Long idCli, Long idCat)
 	{
-		recommandationRepository.deleteRecommandation(idCli, idCat);
+		return recommandationRepository.findByRecommandationPrimaryKeyIdClientIsAndRecommandationPrimaryKeyIdCategorieIs(idCli, idCat);
+	}
+	
+	public void deleteRecommandation(Recommandation recommandation)
+	{
+		recommandationRepository.delete(recommandation);
 	}
 	
 	public List<Recommandation> getByCategorieId(Long idCat)
